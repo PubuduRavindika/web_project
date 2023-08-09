@@ -1,3 +1,7 @@
+<?php
+include("config.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,12 +19,12 @@
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html"><img src="images/logo.png" width="125px"></a>
+                    <a href="index.php"><img src="images/logo.png" width="125px"></a>
                 </div>
                 <nav>
                     <ul id="menuItems">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Product</a></li>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
                         <li><a href="account.html">Account</a></li>
@@ -42,10 +46,38 @@
             </div>
             <select>
                 <option>All Categories</option>
-                <option>Guitar</option>
-                <option>Violin</option>
-                <option>Drum</option>
-                <option>Trumpet</option>
+
+                <?php
+                $get_cats = "select * from categories";
+
+                $run_cats =  mysqli_query($con, $get_cats);
+
+                while($row_cats = mysqli_fetch_array($run_cats)){
+                    $cat_id = $row_cats['cat_id'];
+
+                    $cat_title = $row_cats['cat_title'];
+
+                    echo "<option>$cat_title</option>";
+                }
+                ?>
+            </select>
+
+            <select>
+                <option>All Brands</option>
+
+                <?php
+                $get_brands = "select * from brands";
+
+                $run_brands =  mysqli_query($con, $get_brands);
+
+                while($row_brands = mysqli_fetch_array($run_brands)){
+                    $brand_id = $row_brands['brand_id'];
+
+                    $brand_name = $row_brands['brand_name'];
+
+                    echo "<option value='$brand_id'>$brand_name</option>";
+                }
+                ?>
             </select>
         </div>
 

@@ -20,12 +20,12 @@ include("config.php");
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html"><img src="images/logo.png" width="125px"></a>
+                    <a href="index.php"><img src="images/logo.png" width="125px"></a>
                 </div>
                 <nav>
                     <ul id="menuItems">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Product</a></li>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
                         <li><a href="account.html">Account</a></li>

@@ -14,7 +14,7 @@ include("config.php");
 
 <body>
     <div class="container">
-        <form action="insert_product.php" method="post">
+        <form action="insert_product.php" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
                     <th>Insert New Post Here</th>
@@ -29,7 +29,7 @@ include("config.php");
                     <td>Product Category:</td>
                     <td>
                         <select name="product_cat">
-                            <option>Select a Category</option>
+                            <option disabled selected>Select a Category</option>
 
                             <?php
                             $get_cats = "select * from categories";
@@ -52,7 +52,7 @@ include("config.php");
                     <td>Product Brand:</td>
                     <td>
                         <select name="product_brand">
-                            <option>Select a Brand</option>
+                            <option disabled selected>Select a Brand</option>
 
                             <?php
                             $get_brands = "select * from brands";
@@ -125,8 +125,6 @@ if(isset($_POST['insert_post'])){
 
     if($insert_pro){
         echo "<script>alert('Product has been insert successfully')</script>";
-
-        echo "<script>window.open('index.php?insert_product','self')</script>";
     }
 
 }

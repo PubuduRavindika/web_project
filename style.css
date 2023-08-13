@@ -52,6 +52,12 @@ p{
     justify-content: space-around;
 }
 
+.row-products{
+    display: grid;
+    grid-template-columns: repeat(4, 2fr);
+    justify-items: center;
+}
+
 .col-2{
     flex-basis: 50%;
     min-width: 300px;
@@ -661,6 +667,12 @@ form a{
         width: 100px;
         margin: 10px 0 20px 0;
         padding: 8px 20px;
+    }
+
+    .row-products{
+        display: grid;
+        grid-template-columns: repeat(1, 2fr);
+        justify-items: center;
     }
 
 

@@ -41,8 +41,9 @@ include("config.php");
         <div class="row row-2">
             <h2>All Products</h2>
             <div class="search-container">
-                <input type="text" class="search" placeholder="Search">
-                <div class="btn search-btn">Search</div>
+                <input type="text" name="user_query" class="search" placeholder="Search">
+                <div name="search" class="btn search-btn">Search</div>
+                <!-- <input type="submit" name="search" value="search" class="btn search-btn"> -->
             </div>
             <select>
                 <option>All Categories</option>
@@ -52,15 +53,19 @@ include("config.php");
 
                 $run_cats =  mysqli_query($con, $get_cats);
 
-                while($row_cats = mysqli_fetch_array($run_cats)){
+                while ($row_cats = mysqli_fetch_array($run_cats)) {
                     $cat_id = $row_cats['cat_id'];
 
                     $cat_title = $row_cats['cat_title'];
 
-                    echo "<option>$cat_title</option>";
+                    echo "<option value='$cat_id'>$cat_title</option>";
                 }
+
                 ?>
             </select>
+
+            <?php
+            ?>
 
             <select>
                 <option>All Brands</option>
@@ -70,7 +75,7 @@ include("config.php");
 
                 $run_brands =  mysqli_query($con, $get_brands);
 
-                while($row_brands = mysqli_fetch_array($run_brands)){
+                while ($row_brands = mysqli_fetch_array($run_brands)) {
                     $brand_id = $row_brands['brand_id'];
 
                     $brand_name = $row_brands['brand_name'];
@@ -81,167 +86,42 @@ include("config.php");
             </select>
         </div>
 
+        <div class="row-products">
 
-        <div class="row">
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Guitar_01.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+            <?php
+            $get_pro = "select * from products";
 
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Violin_01.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+            $run_pro = mysqli_query($con, $get_pro);
 
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Guitar_03.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+            while ($row_pro = mysqli_fetch_array($run_pro)) {
+                $pro_id = $row_pro['product_id'];
+                $pro_cat = $row_pro['product_cat'];
+                $pro_brand = $row_pro['product_brand'];
+                $pro_title = $row_pro['product_title'];
+                $pro_price = $row_pro['product_price'];
+                $pro_desc = $row_pro['product_desc'];
+                $pro_img = $row_pro['product_img'];
 
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Drum_01.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
-        </div>
+                echo "
+                    <div class='col-4'>
+                    <a href='product_details.php'><img src='admin/product_imgs/$pro_img'></a>
+                    <a href='product_details.php'><h4>$pro_title</h4></a>
+                    <div class='rating'>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star-o'></i>
+                    </div>
+                    <p>Rs.$pro_price.00</p>
+                    </div>
+                    
+                    ";
+            }
+            ?>
 
-        <div class="row">
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Guitar_01.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
 
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Guitar_02.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
 
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Violin_01.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
-
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Drum_01.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Violin_02.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
-
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Guitar_03.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
-
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Drum_01.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
-
-            <div class="col-4">
-                <a href="product_details.html"><img src="images/Guitar_01.png"></a>
-                <a href="product_details.html"></a><h4>Classic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
         </div>
 
         <div class="page-btn">
@@ -304,16 +184,16 @@ include("config.php");
 
         menuItems.style.maxHeight = "0px";
 
-        function menutoggle(){
-            if(menuItems.style.maxHeight == "0px"){
+        function menutoggle() {
+            if (menuItems.style.maxHeight == "0px") {
                 menuItems.style.maxHeight = "200px";
-            }
-
-            else{
+            } else {
                 menuItems.style.maxHeight = "0px";
             }
         }
     </script>
+
+
 
 
 </body>

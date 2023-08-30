@@ -45,8 +45,8 @@ include("config.php");
                 <div name="search" class="btn search-btn">Search</div>
                 <!-- <input type="submit" name="search" value="search" class="btn search-btn"> -->
             </div>
-            <select>
-                <option>All Categories</option>
+            <select onchange="sorter()" id = "category_selector">
+                <option value="0">All Categories</option>
 
                 <?php
                 $get_cats = "select * from categories";
@@ -67,8 +67,8 @@ include("config.php");
             <?php
             ?>
 
-            <select>
-                <option>All Brands</option>
+            <select onchange="sorter()" id ="brand_selector">
+                <option value="0">All Brands</option>
 
                 <?php
                 $get_brands = "select * from brands";
@@ -103,7 +103,7 @@ include("config.php");
                 $pro_img = $row_pro['product_img'];
 
                 echo "
-                    <div class='col-4'>
+                    <div class='col-4 item_holder product_brand_$pro_brand product_category_$pro_cat'>
                     <a href='product_details.php'><img src='admin/product_imgs/$pro_img'></a>
                     <a href='product_details.php'><h4>$pro_title</h4></a>
                     <div class='rating'>
@@ -189,6 +189,66 @@ include("config.php");
                 menuItems.style.maxHeight = "200px";
             } else {
                 menuItems.style.maxHeight = "0px";
+            }
+        }
+
+        function sorter(){
+            itemBrandSort();
+            itemCategorySort();
+        }
+
+        function itemBrandSort() {
+            var itemType = document.getElementById("brand_selector").value;
+            console.log(itemType);
+            itemHider(itemType);
+
+            if (itemType != 0) {
+                var tagName = "product_brand_" + itemType;
+                var displayItems = document.getElementsByClassName(tagName);
+                // console.log(typeof(displayItems));
+                var items = Array.from(displayItems);
+                items.forEach(item => {
+                    if(window.getComputedStyle(item).getPropertyPriority("display") == "none")
+                        item.style.display = "block";
+                });
+            } else {
+                itemHider(itemType);
+            }
+
+            
+        }
+
+        function itemCategorySort() {
+            var itemType = document.getElementById("category_selector").value;
+            console.log(itemType);
+            itemHider(itemType);
+
+            if (itemType != 0) {
+                var tagName = "product_category_" + itemType;
+                var displayItems = document.getElementsByClassName(tagName);
+                // console.log(typeof(displayItems));
+                var items = Array.from(displayItems);
+                items.forEach(item => {
+                    if(window.getComputedStyle(item).getPropertyPriority("display") == "none")
+                        item.style.display = "block";
+                });
+            } else {
+                itemHider(itemType);
+            }
+        }
+
+        function itemHider(itemType) {
+            var allItems = document.getElementsByClassName("item_holder");
+            var items = Array.from(allItems);
+            if (itemType == 0) {
+                items.forEach(item => {
+                        item.style.display = "block";
+                });
+
+            } else {
+                items.forEach(item => {
+                        item.style.display = "none";
+                });
             }
         }
     </script>

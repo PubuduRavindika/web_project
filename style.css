@@ -83,6 +83,7 @@ p{
     margin: 30px 0px;
     border-radius: 30px;
     transition: 0.5s;
+    cursor: pointer;
 }
 
 .btn:hover{
@@ -428,7 +429,6 @@ input:focus{
     flex-basis: 24%;
     cursor: pointer;
 }
-
 
 
 

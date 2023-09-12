@@ -38,39 +38,57 @@ include("config.php");
 
     <!-------- single product details-------->
 
+
     <div class="small-container single-product">
         <div class="row">
-            <div class="col-2">
-                <img src="images/Guitar_01.png" width="100%" id="productImg">
 
-                <div class="small-img-row">
-                    <div class="small-img-col">
-                        <img src="images/Guitar_01.png" width="100%" class="small-img">
+        <?php
+        if(isset($_GET['pro_id'])){
+            $product_id = $_GET['pro_id'];
+
+            $run_query_by_pro_id = mysqli_query($con, "select * from products where product_id = '$product_id'");
+
+            while($row_pro = mysqli_fetch_array($run_query_by_pro_id)){
+
+                $pro_id = $row_pro['product_id'];
+                $pro_cat = $row_pro['product_cat'];
+                $pro_brand = $row_pro['product_brand'];
+                $pro_title = $row_pro['product_title'];
+                $pro_price = $row_pro['product_price'];
+                $pro_desc = $row_pro['product_desc'];
+                $pro_img_01 = $row_pro['product_img_01'];
+                $pro_img_02 = $row_pro['product_img_02'];
+                $pro_img_03 = $row_pro['product_img_03'];
+                $pro_img_04 = $row_pro['product_img_04'];
+                $pro_img_05 = $row_pro['product_img_05'];
+
+
+                echo "
+                <div class='col-2'>
+                <img src='admin/product_imgs/$pro_img_01' width='100% id='productImg'>
+
+                <div class='small-img-row'>
+                    <div class='small-img-col'>
+                        <img src='admin/product_imgs/$pro_img_02' width='100%' class='small-img'>
                     </div>
 
-                    <div class="small-img-col">
-                        <img src="images/Guitar_02.png" width="100%" class="small-img">
+                    <div class='small-img-col'>
+                        <img src='admin/product_imgs/$pro_img_03' width='100%' class='small-img'>
                     </div>
 
-                    <div class="small-img-col">
-                        <img src="images/Guitar_03.png" width="100%" class="small-img">
+                    <div class='small-img-col'>
+                        <img src='admin/product_imgs/$pro_img_04' width='100%' class='small-img'>
                     </div>
 
-                    <div class="small-img-col">
-                        <img src="images/Guitar_02.png" width="100%" class="small-img">
+                    <div class='small-img-col'>
+                        <img src='admin/product_imgs/$pro_img_05' width='100%' class='small-img'>
                     </div>
                 </div>
-
-
-
-
-
-
             </div>
-            <div class="col-2">
-                <p>Home / Guitar</p>
-                <h1>Classic Guitar by YAMAHA</h1>
-                <h4>Rs.500.00</h4>
+            <div class='col-2'>
+                <p>Home / $pro_title</p>
+                <h1>$pro_title</h1>
+                <h4>Rs.$pro_price.00</h4>
 
                 <select>
                     <option>Select Color</option>
@@ -79,19 +97,41 @@ include("config.php");
                     <option>Brown</option>
                 </select>
 
-                <input type="number" value="1">
-                <a href="" class="btn">Add to Cart</a>
+                <input type='number' value='1'>
+                <a class='btn' name='add_cart'>Add to Cart</a>
 
-                <h3>Product Details <i class="fa fa-indent"></i></h3>
+                <h3>Product Details <i class='fa fa-indent'></i></h3>
                 <br>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit. Eos aspernatur modi eius fuga esse harum 
-                    eaque alias laboriosam laudantium temporibus 
-                    repudiandae repellat dolores voluptatibus 
-                    voluptas a at ab, doloremque labore!</p>
+                <p>$pro_desc</p>
             </div>
+                ";
+            }
+        }
+    ?>     
         </div>
     </div>
+
+
+    <!-- // if(isset($_GET['add_cart'])){
+        
+    //     $product_id = $_GET['add_cart'];
+
+    //     $run_check_pro = mysqli_query($con, "select * from cart where product_id='$product_id'");
+
+    //     if(mysqli_num_rows($run_check_pro) > 0){
+    //         echo "";
+    //     }
+    //     else{
+    //         $run_insert_pro = mysqli_query($con, "insert into cart (product_id, product_title, ip_address, quality) values('$product_id', '', '', '')");
+        
+    //         if($run_insert_pro){
+    //             echo "Record has inserted successfully";
+    //         }
+    //     }
+
+    // } -->
+    
+
 
 
     <!-------- titile-------->

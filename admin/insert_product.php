@@ -72,8 +72,28 @@ include("config.php");
                 </tr>
 
                 <tr class="details_tr">
-                    <td>Product Image:</td>
-                    <td><input type="file" name="product_img" required></td>
+                    <td>Product Image 01:</td>
+                    <td><input type="file" name="product_img_01" required></td>
+                </tr>
+
+                <tr class="details_tr">
+                    <td>Product Image 02:</td>
+                    <td><input type="file" name="product_img_02" required></td>
+                </tr>
+
+                <tr class="details_tr">
+                    <td>Product Image 03:</td>
+                    <td><input type="file" name="product_img_03" required></td>
+                </tr>
+
+                <tr class="details_tr">
+                    <td>Product Image 04:</td>
+                    <td><input type="file" name="product_img_04" required></td>
+                </tr>
+
+                <tr class="details_tr">
+                    <td>Product Image 05:</td>
+                    <td><input type="file" name="product_img_05" required></td>
                 </tr>
 
                 <tr class="details_tr">
@@ -114,12 +134,32 @@ if(isset($_POST['insert_post'])){
 
     //getting the image from the field
 
-    $product_img = $_FILES['product_img']['name'];
-    $product_img_tmp = $_FILES['product_img']['tmp_name'];
+    $product_img_01 = $_FILES['product_img_01']['name'];
+    $product_img_01_tmp = $_FILES['product_img_01']['tmp_name'];
 
-    move_uploaded_file($product_img_tmp,"product_imgs/$product_img");
+    move_uploaded_file($product_img_01_tmp,"product_imgs/$product_img_01");
 
-    $insert_product = "insert into products (product_cat,product_brand,product_title,product_price,product_desc,product_img,product_keywords) values('$product_cat','$product_brand','$product_title','$product_price','$product_desc','$product_img','$product_keywords')";
+    $product_img_02 = $_FILES['product_img_02']['name'];
+    $product_img_02_tmp = $_FILES['product_img_02']['tmp_name'];
+
+    move_uploaded_file($product_img_02_tmp,"product_imgs/$product_img_02");
+
+    $product_img_03 = $_FILES['product_img_03']['name'];
+    $product_img_03_tmp = $_FILES['product_img_03']['tmp_name'];
+
+    move_uploaded_file($product_img_03_tmp,"product_imgs/$product_img_03");
+
+    $product_img_04 = $_FILES['product_img_04']['name'];
+    $product_img_04_tmp = $_FILES['product_img_04']['tmp_name'];
+
+    move_uploaded_file($product_img_04_tmp,"product_imgs/$product_img_04");
+
+    $product_img_05 = $_FILES['product_img_05']['name'];
+    $product_img_05_tmp = $_FILES['product_img_05']['tmp_name'];
+
+    move_uploaded_file($product_img_05_tmp,"product_imgs/$product_img_05");
+
+    $insert_product = "insert into products (product_cat,product_brand,product_title,product_price,product_desc,product_keywords,product_img_01,product_img_02,product_img_03,product_img_04,product_img_05) values('$product_cat','$product_brand','$product_title','$product_price','$product_desc','$product_keywords','$product_img_01','$product_img_02','$product_img_03','$product_img_04','$product_img_05')";
 
     $insert_pro = mysqli_query($con, $insert_product);
 

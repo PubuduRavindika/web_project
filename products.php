@@ -100,11 +100,15 @@ include("config.php");
                 $pro_title = $row_pro['product_title'];
                 $pro_price = $row_pro['product_price'];
                 $pro_desc = $row_pro['product_desc'];
-                $pro_img = $row_pro['product_img'];
+                $pro_img_01 = $row_pro['product_img_01'];
+                $pro_img_02 = $row_pro['product_img_02'];
+                $pro_img_03 = $row_pro['product_img_03'];
+                $pro_img_04 = $row_pro['product_img_04'];
+                $pro_img_05 = $row_pro['product_img_05'];
 
                 echo "
                     <div class='col-4 item_holder product_brand_$pro_brand product_category_$pro_cat'>
-                    <a href='product_details.php'><img src='admin/product_imgs/$pro_img'></a>
+                    <a href='product_details.php?pro_id=$pro_id'><img src='admin/product_imgs/$pro_img_01'></a>
                     <a href='product_details.php'><h4>$pro_title</h4></a>
                     <div class='rating'>
                         <i class='fa fa-star'></i>

@@ -20,7 +20,7 @@ include("config.php");
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.php"><img src="images/logo.png" width="125px"></a>
+                    <a href="index.php"><img src="images/web-logo.png" width="125px"></a>
                 </div>
                 <nav>
                     <ul id="menuItems">
@@ -31,7 +31,7 @@ include("config.php");
                         <li><a href="account.html">Account</a></li>
                     </ul>
                 </nav>
-                <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
+                <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
 
@@ -364,7 +364,7 @@ include("config.php");
                 </div>
 
                 <div class="footer-col-2">
-                    <img src="images/logo-white.png">
+                    <img src="images/web-logo-white.png" width="300px">
                     <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
                 </div>
 

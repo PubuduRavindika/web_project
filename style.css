@@ -560,11 +560,12 @@ form .btn:focus{
 }
 
 #loginForm{
-    left: -300px;
+    left: 0;
 }
 
 #regForm{
-    left: 0;
+    left: -300px;
+    margin-top: -40px;
 }
 
 form a{

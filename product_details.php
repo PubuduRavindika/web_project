@@ -19,7 +19,7 @@ include("config.php");
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.php"><img src="images/logo.png" width="125px"></a>
+                    <a href="index.php"><img src="images/web-logo.png" width="125px"></a>
                 </div>
                 <nav>
                     <ul id="menuItems">
@@ -30,7 +30,7 @@ include("config.php");
                         <li><a href="account.html">Account</a></li>
                     </ul>
                 </nav>
-                <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
+                <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
@@ -98,7 +98,7 @@ include("config.php");
                 </select>
 
                 <input type='number' value='1'>
-                <a class='btn' name='add_cart'>Add to Cart</a>
+                <a href='product_details.php?add_cart=$pro_id' class='btn'>Add to Cart</a>
 
                 <h3>Product Details <i class='fa fa-indent'></i></h3>
                 <br>
@@ -111,27 +111,47 @@ include("config.php");
         </div>
     </div>
 
-
-    <!-- // if(isset($_GET['add_cart'])){
+    <?php
+    if(isset($_GET['add_cart'])){
         
-    //     $product_id = $_GET['add_cart'];
+        $product_id = $_GET['add_cart'];
 
-    //     $run_check_pro = mysqli_query($con, "select * from cart where product_id='$product_id'");
+        $run_check_pro = mysqli_query($con, "select * from cart where product_id='$product_id'");
 
-    //     if(mysqli_num_rows($run_check_pro) > 0){
-    //         echo "";
-    //     }
-    //     else{
-    //         $run_insert_pro = mysqli_query($con, "insert into cart (product_id, product_title, ip_address, quality) values('$product_id', '', '', '')");
+        if(mysqli_num_rows($run_check_pro) > 0){
+            echo "";
+        }
+        else{
+
+            $fetch_pro = mysqli_query($con, "select * from products where product_id='$product_id'");
+            $fetch_pro = mysqli_fetch_array($fetch_pro);
+            $pro_title = $fetch_pro['product_title'];
+
+            // get ip address
+            function get_ip() {  
+                //whether ip is from the share internet  
+                 if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
+                            $ip = $_SERVER['HTTP_CLIENT_IP'];  
+                    }  
+                //whether ip is from the proxy  
+                elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+                            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+                 }  
+            //whether ip is from the remote address  
+                else{  
+                         $ip = $_SERVER['REMOTE_ADDR'];  
+                 }  
+                 return $ip;  
+            }  
+
+            $ip = get_ip();
+
+            $run_insert_pro = mysqli_query($con, "insert into cart (product_id, product_title, ip_address, quality) values('$product_id', '$pro_title', '$ip', '')");
         
-    //         if($run_insert_pro){
-    //             echo "Record has inserted successfully";
-    //         }
-    //     }
+        }
 
-    // } -->
-    
-
+    }
+    ?>
 
 
     <!-------- titile-------->
@@ -218,7 +238,7 @@ include("config.php");
                 </div>
 
                 <div class="footer-col-2">
-                    <img src="images/logo-white.png">
+                <img src="images/web-logo-white.png" width="300px">
                     <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
                 </div>
 

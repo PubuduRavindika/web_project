@@ -65,6 +65,7 @@ include("config.php");
 
                 echo "
                 <div class='col-2'>
+
                 <img src='admin/product_imgs/$pro_img_01' width='100% id='productImg'>
 
                 <div class='small-img-row'>
@@ -239,7 +240,7 @@ include("config.php");
 
                 <div class="footer-col-2">
                 <img src="images/web-logo-white.png" width="300px">
-                    <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
+                    <p>Your journey to musical excellence begins here</p>
                 </div>
 
                 <div class="footer-col-3">
@@ -286,11 +287,18 @@ include("config.php");
     </script>
 
 
-    <!--------js for product gallery-------->
+    <!-- ------js for product gallery-------->
 
-    <script>
+    <script type="text/JavaScript">
         var productImg = document.getElementById("productImg");
         var smallImg = document.getElementsByClassName("small-img");
+
+        // if (productImg == null) {
+        //     console.log('productImg is null');
+        // }
+        // else{
+        //     console.log('productImg is not null');
+        // }
 
         smallImg[0].onclick = function(){
             productImg.src = smallImg[0].src;
@@ -308,7 +316,6 @@ include("config.php");
             productImg.src = smallImg[3].src;
         }
     </script>
-
 
 </body>
 

@@ -129,7 +129,7 @@ include("config.php");
 
                 <div class="footer-col-2">
                 <img src="images/web-logo-white.png" width="300px">
-                    <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
+                    <p>Your journey to musical excellence begins here</p>
                 </div>
 
                 <div class="footer-col-3">

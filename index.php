@@ -37,10 +37,8 @@ include("config.php");
 
             <div class="row">
                 <div class="col-2">
-                    <h1>Lorem ipsum dolor<br>sit amet!</h1>
-                    <p>Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit.<br>Consequatur, asperiores
-                        in blanditiis deserunt</p>
+                    <h1>Elevate Your Melody<br>TUNE MART!</h1>
+                    <p>Welcome to our online music instrument store,<br>where we're dedicated to elevating your musical journey.</p>
                     <a href="" class="btn">Explore Now &#8594;</a>
                 </div>
                 <div class="col-2">
@@ -365,7 +363,7 @@ include("config.php");
 
                 <div class="footer-col-2">
                     <img src="images/web-logo-white.png" width="300px">
-                    <p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
+                    <p>Your journey to musical excellence begins here</p>
                 </div>
 
                 <div class="footer-col-3">

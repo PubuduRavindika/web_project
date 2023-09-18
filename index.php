@@ -353,11 +353,14 @@ include("config.php");
         <div class="container">
             <div class="row">
                 <div class="footer-col-1">
-                    <h3>Download Our App</h3>
-                    <p>Lorem ipsum dolor sit amet</p>
+                    <!-- <h3>Download Our App</h3>
+                    <p>Lorem ipsum dolor sit amet</p> -->
+                    <h3>Available Payment Methods</h3>
+                    <p>Credit Card/ Debit Card</p>
                     <div class="app-logo">
-                        <img src="images/play-store.png">
-                        <img src="images/app-store.png">
+                        <!-- <img src="images/play-store.png">
+                        <img src="images/app-store.png"> -->
+                        <img src="images/Payment.png">
                     </div>
                 </div>
 
@@ -370,9 +373,9 @@ include("config.php");
                     <h3>Useful Links</h3>
                     <ul>
                         <li>Coupons</li>
-                        <li>Blog Post</li>
-                        <li>Return Policy</li>
-                        <li>Join Affiliate</li>
+                        <li>Products</li>
+                        <li>About US</li>
+                        <li>Contact</li>
                     </ul>
                 </div>
 
@@ -387,7 +390,7 @@ include("config.php");
                 </div>
             </div>
             <hr>
-            <p class="copyright">Copyright 2023 - Delf Media</p>
+            <p class="copyright">Copyright 2023 - Tune Mart</p>
         </div>
     </div>
 

@@ -66,7 +66,7 @@ include("config.php");
                 echo "
                 <div class='col-2'>
 
-                <img src='admin/product_imgs/$pro_img_01' width='100% id='productImg'>
+                <img src='admin/product_imgs/$pro_img_01' width='100%' id='productImg'>
 
                 <div class='small-img-row'>
                     <div class='small-img-col'>
@@ -148,7 +148,13 @@ include("config.php");
             $ip = get_ip();
 
             $run_insert_pro = mysqli_query($con, "insert into cart (product_id, product_title, ip_address, quality) values('$product_id', '$pro_title', '$ip', '')");
-        
+            
+            if ($run_insert_pro) {
+                header("location:products.php");
+              } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+              }
+
         }
 
     }
@@ -301,6 +307,8 @@ include("config.php");
         // }
 
         smallImg[0].onclick = function(){
+            
+            // console.log(productImg);
             productImg.src = smallImg[0].src;
         }
 

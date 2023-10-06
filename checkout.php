@@ -1,3 +1,8 @@
+<?php
+session_start();
+include("config.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,52 +28,34 @@
                         <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
-                        <li><a href="account.html">Account</a></li>
+                        <li><a href="account.php">Account</a></li>
                     </ul>
                 </nav>
                 <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
+                <div class="noti_cart_number">
+                    <?php
+
+
+                    $ip = get_ip();
+
+                    $run_items = mysqli_query($con, "select * from cart where ip_address='$ip'");
+
+                    echo $count_items = mysqli_num_rows($run_items);
+                    ?>
+                </div>
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
     </div>
 
-    <!-------- account page-------->
-
-    <div class="account-page">
-        <div class="container">
-            <div class="row">
-                <div class="col-2">
-                    <img src="images/cover.png" width="100%">
-                </div>
-
-                <div class="col-2">
-                    <div class="form-container">
-                        <div class="form-btn">
-                            <span onclick="login()">Login</span>
-                            <span onclick="reg()">Register</span>
-                            <hr id="indicator">
-                        </div>
-
-                        <form id="loginForm">
-                            <input type="text" placeholder="Username">
-                            <input type="password" placeholder="Password">
-                            <button type="submit" class="btn">Login</button>
-                            <a href="">Forgot password</a>
-                        </form>
-
-                        <form id="regForm">
-                            <input type="text" placeholder="Username">
-                            <input type="email" placeholder="Email">
-                            <input type="password" placeholder="Password">
-                            <input type="password" placeholder="Confirm Password">
-                            <button type="submit" class="btn">Register</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <?php
+    if(!isset($_SESSION['email'])){
+        include('account.php');
+    }
+    else{
+        include('payment.php');
+    }
+    ?>
 
 
 
@@ -129,37 +116,11 @@
         function menutoggle() {
             if (menuItems.style.maxHeight == "0px") {
                 menuItems.style.maxHeight = "200px";
-            }
-
-            else {
+            } else {
                 menuItems.style.maxHeight = "0px";
             }
         }
     </script>
-
-
-    <!--------js for toggle form-------->
-
-    <script>
-        var loginForm = document.getElementById("loginForm");
-        var regForm = document.getElementById("regForm");
-        var indicator = document.getElementById("indicator");
-
-        function login(){
-            loginForm.style.transform = "translateX(0px)";
-            regForm.style.transform = "translateX(0px)";
-            indicator.style.transform = "translateX(0px)";
-        }
-
-        function reg(){
-            loginForm.style.transform = "translateX(300px)";
-            regForm.style.transform = "translateX(300px)";
-            indicator.style.transform = "translateX(100px)";
-        }
-
-
-    </script>
-
 
 
 </body>

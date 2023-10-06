@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("config.php");
 ?>
 
@@ -28,10 +29,20 @@ include("config.php");
                         <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
-                        <li><a href="account.html">Account</a></li>
+                        <li><a href="account.php">Account</a></li>
+                        <li><a href="logout.php">Logout</a></li>
                     </ul>
                 </nav>
                 <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
+                <div class="noti_cart_number">
+                    <?php
+                    $ip = get_ip();
+
+                    $run_items = mysqli_query($con, "select * from cart where ip_address='$ip'");
+
+                    echo $count_items = mysqli_num_rows($run_items);
+                    ?>
+                </div>
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
 
@@ -73,7 +84,8 @@ include("config.php");
         <div class="row">
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Guitar_01.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -86,7 +98,8 @@ include("config.php");
 
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Violin_01.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -99,7 +112,8 @@ include("config.php");
 
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Guitar_03.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -112,7 +126,8 @@ include("config.php");
 
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Drum_01.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -128,7 +143,8 @@ include("config.php");
         <div class="row">
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Guitar_01.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -141,7 +157,8 @@ include("config.php");
 
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Guitar_02.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -154,7 +171,8 @@ include("config.php");
 
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Violin_01.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -167,7 +185,8 @@ include("config.php");
 
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Drum_01.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -182,7 +201,8 @@ include("config.php");
         <div class="row">
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Violin_02.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -195,7 +215,8 @@ include("config.php");
 
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Guitar_03.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -208,7 +229,8 @@ include("config.php");
 
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Drum_01.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -221,7 +243,8 @@ include("config.php");
 
             <div class="col-4">
                 <a href="product_details.php"><img src="images/Guitar_01.png"></a>
-                <a href="product_details.php"></a><h4>Clasic Guitar</h4></a>
+                <a href="product_details.php"></a>
+                <h4>Clasic Guitar</h4></a>
                 <div class="rating">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star"></i>
@@ -401,12 +424,10 @@ include("config.php");
 
         menuItems.style.maxHeight = "0px";
 
-        function menutoggle(){
-            if(menuItems.style.maxHeight == "0px"){
+        function menutoggle() {
+            if (menuItems.style.maxHeight == "0px") {
                 menuItems.style.maxHeight = "200px";
-            }
-
-            else{
+            } else {
                 menuItems.style.maxHeight = "0px";
             }
         }

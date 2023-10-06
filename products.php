@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("config.php");
 ?>
 
@@ -27,10 +28,19 @@ include("config.php");
                         <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
-                        <li><a href="account.html">Account</a></li>
+                        <li><a href="account.php">Account</a></li>
                     </ul>
                 </nav>
                 <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
+                <div class="noti_cart_number">
+                    <?php  
+                    $ip = get_ip();
+
+                    $run_items = mysqli_query($con, "select * from cart where ip_address='$ip'");
+
+                    echo $count_items = mysqli_num_rows($run_items);
+                    ?>
+                </div>
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>

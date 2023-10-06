@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("config.php");
 ?>
 
@@ -27,10 +28,19 @@ include("config.php");
                         <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
-                        <li><a href="account.html">Account</a></li>
+                        <li><a href="account.php">Account</a></li>
                     </ul>
                 </nav>
                 <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
+                <div class="noti_cart_number">
+                    <?php
+                    $ip = get_ip();
+
+                    $run_items = mysqli_query($con, "select * from cart where ip_address='$ip'");
+
+                    echo $count_items = mysqli_num_rows($run_items);
+                    ?>
+                </div>
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
@@ -128,31 +138,14 @@ include("config.php");
             $fetch_pro = mysqli_fetch_array($fetch_pro);
             $pro_title = $fetch_pro['product_title'];
 
-            // get ip address
-            function get_ip() {  
-                //whether ip is from the share internet  
-                 if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
-                            $ip = $_SERVER['HTTP_CLIENT_IP'];  
-                    }  
-                //whether ip is from the proxy  
-                elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
-                            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
-                 }  
-            //whether ip is from the remote address  
-                else{  
-                         $ip = $_SERVER['REMOTE_ADDR'];  
-                 }  
-                 return $ip;  
-            }  
-
             $ip = get_ip();
 
-            $run_insert_pro = mysqli_query($con, "insert into cart (product_id, product_title, ip_address, quality) values('$product_id', '$pro_title', '$ip', '')");
+            $run_insert_pro = mysqli_query($con, "insert into cart (product_id, product_title, ip_address) values('$product_id', '$pro_title', '$ip')");
             
             if ($run_insert_pro) {
                 header("location:products.php");
               } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                echo "Error: " . $sql . "<br>" . mysqli_error($con);
               }
 
         }

@@ -168,6 +168,17 @@ h4{
     transform: translateY(-5px);
 }
 
+.noti_cart_number{
+    background: red;
+    color: white;
+    top: -5px;
+    margin-left: -6px;
+    margin-top: -10px;
+    padding: 2px;
+    border-radius: 50%;
+    
+}
+
 /* ------ offer ------ */
 
 .offer{
@@ -496,6 +507,20 @@ th:last-child{
     text-align: right;
 }
 
+.checkout_btn{
+    display: inline-block;
+    background: #ff523b;
+    color: #fff;
+    padding: 8px 30px;
+    margin: 30px 0px;
+    border-radius: 30px;
+    transition: 0.5s;
+    cursor: pointer;
+} 
+
+.checkout_btn:hover{
+    background:#563434;
+}
 
 
 /*------ account page ------*/

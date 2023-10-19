@@ -1,6 +1,12 @@
 <?php
 session_start();
 include("config.php");
+
+if(!isset($_SESSION['email'])){
+    header("location:account.php");
+}
+
+
 ?>
 
 <!DOCTYPE html>

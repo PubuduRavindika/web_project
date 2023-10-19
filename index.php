@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("config.php");
+
 ?>
 
 
@@ -29,7 +30,7 @@ include("config.php");
                         <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
-                        <li><a href="account.php">Account</a></li>
+                        <li><a href="user/user_profile.php">Account</a></li>
                         <li><a href="logout.php">Logout</a></li>
                     </ul>
                 </nav>
@@ -43,6 +44,28 @@ include("config.php");
                     echo $count_items = mysqli_num_rows($run_items);
                     ?>
                 </div>
+
+                <?php
+                    if(!isset($_SESSION['email'])){   
+
+                        echo "
+                        <div class='profile'>
+                        <a href='account.php'><img src='images/profile-2.png'></a>   
+                        </div>
+                        
+                        ";
+                    }
+
+                    else{
+                        echo "
+                        <div class='profile'>
+                        <a href='account.php'><img src='images/profile-1.png'></a>   
+                        </div>
+                        
+                        ";
+                    }
+                ?>
+                
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
 

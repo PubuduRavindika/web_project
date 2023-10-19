@@ -49,7 +49,7 @@ include("config.php");
     <!-------- cart item details-------->
 
     <div class="small-container cart-page">
-        
+
         <table>
             <tr>
                 <th>Product</th>
@@ -130,7 +130,9 @@ include("config.php");
 
                 <tr>
                     <td></td>
+                    <form id="checkout" method="post">
                     <td><a href="checkout.php" class="checkout_btn">CheckOut</a></td>
+                    </form>
                 </tr>
             </table>
         </div>

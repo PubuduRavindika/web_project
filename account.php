@@ -3,7 +3,6 @@ session_start();
 include("config.php");
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,44 +62,107 @@ include("config.php");
                         </form>
 
                         <form id="regForm" method="post">
-                            <input type="text" placeholder="Username">
-                            <input type="email" placeholder="Email">
-                            <input type="password" placeholder="Password">
-                            <input type="password" placeholder="Confirm Password">
-                            <button type="submit" class="btn">Register</button>
+                            <input type="text" name="name" placeholder="Username">
+                            <input type="email" name="email" placeholder="Email">
+                            <input type="password" name="password" id="password_confirm1" placeholder="Password">
+                            <input type="password" name="confirm_password" id="password_confirm2" placeholder="Confirm Password">
+                            <input type="file" name="image" class="btn">
+                            <button type="submit" name="register" class="btn">Register</button>
                         </form>
                     </div>
                 </div>
-                
+
                 <?php
-                    if(isset($_POST['login'])){
-                        $email = $_POST['email'];
-                        $password = $_POST['password'];
+                if (isset($_POST['login'])) {
+                    $email = $_POST['email'];
+                    $password = $_POST['password'];
 
-                        $run_login = mysqli_query($con, "select * from users where password='$password' AND email='$email'");
+                    $run_login = mysqli_query($con, "select * from users where password='$password' AND email='$email'");
 
-                        $check_login = mysqli_num_rows($run_login);
+                    $check_login = mysqli_num_rows($run_login);
 
-                        if($check_login == 0){
-                            echo "<script>alert('Password or email is incorrect, Please try again!')</script>";
-                            exit();
-                        }
+                    if ($check_login == 0) {
+                        echo "<script>alert('Password or email is incorrect, Please try again!')</script>";
+                        exit();
+                    }
 
+                    $ip = get_ip();
+
+                    $run_cart = mysqli_query($con, "select * from cart where ip_address='$ip'");
+                    $check_cart = mysqli_num_rows($run_cart);
+                    if ($check_login > 0 and $check_cart == 0) {
+                        $_SESSION['email'] = $email;
+                        echo "<script>alert('Logged in successfully!')</script>";
+                        echo "<script>window.open('index.php','_self')</script>";
+                    } else {
+                        $_SESSION['email'] = $email;
+                        echo "<script>alert('Logged in successfully!')</script>";
+                        echo "<script>window.open('checkout.php','_self')</script>";
+                    }
+                }
+                ?>
+
+
+
+
+                <?php
+                if (isset($_POST['register'])) {
+
+                    if (!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirm_password']) && !empty($_POST['name'])) {
                         $ip = get_ip();
+                        $name = $_POST['name'];
+                        $email = trim($_POST['email']);
+                        $password = trim($_POST['password']);
+                        // $hash_password = md5($password);
+                        $confirm_password = trim($_POST['confirm_password']);
 
-                        $run_cart = mysqli_query($con, "select * from cart where ip_address='$ip'");
-                        $check_cart = mysqli_num_rows($run_cart);
-                        if($check_login > 0 AND $check_cart==0){
-                            $_SESSION['email'] = $email;
-                            echo "<script>alert('Logged in successfully!')</script>";
-                            echo "<script>window.open('customer/my_account.php','_self')</script>";
-                        }
-                        else{
-                            $_SESSION['email'] = $email; 
-                            echo "<script>alert('Logged in successfully!')</script>";
-                            echo "<script>window.open('checkout.php','_self')</script>";
+                        $image = $_FILES['image']['name'];
+                        $image_tmp = $_FILES['image']['tmp_name'];
+
+                        $check_exist = mysqli_query($con, "select * from users where email = '$email'");
+
+                        $email_count = mysqli_num_rows($check_exist);
+
+                        $row_register = mysqli_fetch_array($check_exist);
+
+                        if ($email_count > 0) {
+                            echo "<script>alert('Sorry, your email $email address already exist in our database !')</script>";
+                        } elseif ($row_register['email'] != $email && $password == $confirm_password) {
+
+                            move_uploaded_file($image_tmp, "profile/$image");
+
+                            $run_insert = mysqli_query($con, "insert into users (ip_address,name,email,password,image) values ('$ip','$name','$email','$password','$image') ");
+
+                            if ($run_insert) {
+                                $sel_user = mysqli_query($con, "select * from users where email='$email' ");
+                                $row_user = mysqli_fetch_array($sel_user);
+
+                                $_SESSION['user_id'] = $row_user['id'] . "<br>";
+                            }
+
+                            $run_cart = mysqli_query($con, "select * from cart where ip_address='$ip'");
+
+                            $check_cart = mysqli_num_rows($run_cart);
+
+                            if ($check_cart == 0) {
+
+                                $_SESSION['email'] = $email;
+
+                                echo "<script>alert('Account has been created successfully!')</script>";
+
+                                echo "<script>window.open('index.php','_self')</script>";
+                            } else {
+
+                                $_SESSION['email'] = $email;
+
+                                echo "<script>alert('Account has been created successfully!')</script>";
+
+                                echo "<script>window.open('checkout.php','_self')</script>";
+                            }
                         }
                     }
+                }
+
                 ?>
 
             </div>
@@ -167,9 +229,7 @@ include("config.php");
         function menutoggle() {
             if (menuItems.style.maxHeight == "0px") {
                 menuItems.style.maxHeight = "200px";
-            }
-
-            else {
+            } else {
                 menuItems.style.maxHeight = "0px";
             }
         }
@@ -183,19 +243,17 @@ include("config.php");
         var regForm = document.getElementById("regForm");
         var indicator = document.getElementById("indicator");
 
-        function login(){
+        function login() {
             loginForm.style.transform = "translateX(0px)";
             regForm.style.transform = "translateX(0px)";
             indicator.style.transform = "translateX(0px)";
         }
 
-        function reg(){
+        function reg() {
             loginForm.style.transform = "translateX(300px)";
             regForm.style.transform = "translateX(300px)";
             indicator.style.transform = "translateX(100px)";
         }
-
-
     </script>
 
 

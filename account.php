@@ -1,7 +1,13 @@
 <?php
 session_start();
 include("config.php");
+
+if(isset($_SESSION['email'])){
+    header("location:user/user_profile.php");
+}
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +38,19 @@ include("config.php");
                     </ul>
                 </nav>
                 <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
+                <div class="noti_cart_number">
+                <?php
+                    if (isset($_SESSION['user_id'])) {
+                        $user_id = $_SESSION['user_id'];
+
+                        $ip = get_ip();
+
+                        $run_items = mysqli_query($con, "select * from cart where ip_address='$ip' and user_id='$user_id'");
+
+                        echo $count_items = mysqli_num_rows($run_items);
+                    }
+                    ?>
+                </div>
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
@@ -54,14 +73,14 @@ include("config.php");
                             <hr id="indicator">
                         </div>
 
-                        <form id="loginForm" method="post">
+                        <form id="loginForm" method="post" enctype="multipart/form-data">
                             <input type="text" placeholder="Username" name="email">
                             <input type="password" placeholder="Password" name="password">
                             <button type="submit" class="btn" name="login">Login</button>
                             <a href="">Forgot password</a>
                         </form>
 
-                        <form id="regForm" method="post">
+                        <form id="regForm" method="post" enctype="multipart/form-data">
                             <input type="text" name="name" placeholder="Username">
                             <input type="email" name="email" placeholder="Email">
                             <input type="password" name="password" id="password_confirm1" placeholder="Password">
@@ -80,6 +99,7 @@ include("config.php");
                     $run_login = mysqli_query($con, "select * from users where password='$password' AND email='$email'");
 
                     $check_login = mysqli_num_rows($run_login);
+                    $row_login = mysqli_fetch_array($run_login);
 
                     if ($check_login == 0) {
                         echo "<script>alert('Password or email is incorrect, Please try again!')</script>";
@@ -88,14 +108,16 @@ include("config.php");
 
                     $ip = get_ip();
 
-                    $run_cart = mysqli_query($con, "select * from cart where ip_address='$ip'");
+                    $run_cart = mysqli_query($con, "select * from cart where ip_address='$ip' and user_id='$user_id'");
                     $check_cart = mysqli_num_rows($run_cart);
                     if ($check_login > 0 and $check_cart == 0) {
                         $_SESSION['email'] = $email;
+                        $_SESSION['user_id'] = $row_login['id'];
                         echo "<script>alert('Logged in successfully!')</script>";
-                        echo "<script>window.open('index.php','_self')</script>";
+                        echo "<script>window.open('products.php','_self')</script>";
                     } else {
                         $_SESSION['email'] = $email;
+                        $_SESSION['user_id'] = $row_login['id'];
                         echo "<script>alert('Logged in successfully!')</script>";
                         echo "<script>window.open('checkout.php','_self')</script>";
                     }
@@ -129,7 +151,8 @@ include("config.php");
                             echo "<script>alert('Sorry, your email $email address already exist in our database !')</script>";
                         } elseif ($row_register['email'] != $email && $password == $confirm_password) {
 
-                            move_uploaded_file($image_tmp, "profile/$image");
+
+                            move_uploaded_file($image_tmp, "upload-files/$image");
 
                             $run_insert = mysqli_query($con, "insert into users (ip_address,name,email,password,image) values ('$ip','$name','$email','$password','$image') ");
 

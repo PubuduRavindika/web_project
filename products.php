@@ -28,19 +28,48 @@ include("config.php");
                         <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
-                        <li><a href="account.php">Account</a></li>
+                        <li><a href="account.php">Log In</a></li>
                     </ul>
                 </nav>
                 <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
                 <div class="noti_cart_number">
-                    <?php  
-                    $ip = get_ip();
+                    <?php
+                    if (isset($_SESSION['user_id'])) {
+                        $user_id = $_SESSION['user_id'];
 
-                    $run_items = mysqli_query($con, "select * from cart where ip_address='$ip'");
+                        $ip = get_ip();
 
-                    echo $count_items = mysqli_num_rows($run_items);
+                        $run_items = mysqli_query($con, "select * from cart where ip_address='$ip' and user_id='$user_id'");
+
+                        echo $count_items = mysqli_num_rows($run_items);
+                    }
                     ?>
                 </div>
+
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+
+                    $run_query_by_id = mysqli_query($con, "select * from users where id = '$user_id'");
+                    while ($row_user = mysqli_fetch_array($run_query_by_id)) {
+                        $user_img = $row_user['image'];
+                    }
+                    echo "
+                    <div class='profile'>
+                    <a href='user/user_profile.php'><img src='upload-files/$user_img'></a>   
+                    </div>
+                        
+                    ";
+                } else {
+                    echo "
+                    <div class='profile'>
+                    <a href='account.php'><img src='images/profile-1.png'></a>   
+                    </div>   
+                    ";
+                }
+
+                ?>
+
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
@@ -55,7 +84,7 @@ include("config.php");
                 <div name="search" class="btn search-btn">Search</div>
                 <!-- <input type="submit" name="search" value="search" class="btn search-btn"> -->
             </div>
-            <select onchange="sorter()" id = "category_selector">
+            <select onchange="sorter()" id="category_selector">
                 <option value="0">All Categories</option>
 
                 <?php
@@ -77,7 +106,7 @@ include("config.php");
             <?php
             ?>
 
-            <select onchange="sorter()" id ="brand_selector">
+            <select onchange="sorter()" id="brand_selector">
                 <option value="0">All Brands</option>
 
                 <?php
@@ -99,7 +128,7 @@ include("config.php");
         <div class="row-products">
 
             <?php
-            $get_pro = "select * from products";
+            $get_pro = "SELECT * FROM products ORDER BY product_id DESC";
 
             $run_pro = mysqli_query($con, $get_pro);
 
@@ -115,6 +144,7 @@ include("config.php");
                 $pro_img_03 = $row_pro['product_img_03'];
                 $pro_img_04 = $row_pro['product_img_04'];
                 $pro_img_05 = $row_pro['product_img_05'];
+
 
                 echo "
                     <div class='col-4 item_holder product_brand_$pro_brand product_category_$pro_cat'>
@@ -209,7 +239,7 @@ include("config.php");
             }
         }
 
-        function sorter(){
+        function sorter() {
             itemBrandSort();
             itemCategorySort();
         }
@@ -225,14 +255,14 @@ include("config.php");
                 // console.log(typeof(displayItems));
                 var items = Array.from(displayItems);
                 items.forEach(item => {
-                    if(window.getComputedStyle(item).getPropertyPriority("display") == "none")
+                    if (window.getComputedStyle(item).getPropertyPriority("display") == "none")
                         item.style.display = "block";
                 });
             } else {
                 itemHider(itemType);
             }
 
-            
+
         }
 
         function itemCategorySort() {
@@ -246,7 +276,7 @@ include("config.php");
                 // console.log(typeof(displayItems));
                 var items = Array.from(displayItems);
                 items.forEach(item => {
-                    if(window.getComputedStyle(item).getPropertyPriority("display") == "none")
+                    if (window.getComputedStyle(item).getPropertyPriority("display") == "none")
                         item.style.display = "block";
                 });
             } else {
@@ -259,12 +289,12 @@ include("config.php");
             var items = Array.from(allItems);
             if (itemType == 0) {
                 items.forEach(item => {
-                        item.style.display = "block";
+                    item.style.display = "block";
                 });
 
             } else {
                 items.forEach(item => {
-                        item.style.display = "none";
+                    item.style.display = "none";
                 });
             }
         }

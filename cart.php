@@ -1,6 +1,10 @@
 <?php
 session_start();
 include("config.php");
+
+if (!isset($_SESSION['email'])) {
+    header("location:account.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,19 +32,48 @@ include("config.php");
                         <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
-                        <li><a href="account.php">Account</a></li>
+                        <li><a href="account.php">Log In</a></li>
                     </ul>
                 </nav>
                 <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
                 <div class="noti_cart_number">
                     <?php
-                    $ip = get_ip();
+                    if (isset($_SESSION['user_id'])) {
+                        $user_id = $_SESSION['user_id'];
 
-                    $run_items = mysqli_query($con, "select * from cart where ip_address='$ip'");
+                        $ip = get_ip();
 
-                    echo $count_items = mysqli_num_rows($run_items);
+                        $run_items = mysqli_query($con, "select * from cart where ip_address='$ip' and user_id='$user_id'");
+
+                        echo $count_items = mysqli_num_rows($run_items);
+                    }
                     ?>
                 </div>
+
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+
+                    $run_query_by_id = mysqli_query($con, "select * from users where id = '$user_id'");
+                    while ($row_user = mysqli_fetch_array($run_query_by_id)) {
+                        $user_img = $row_user['image'];
+                    }
+                    echo "
+                    <div class='profile'>
+                    <a href='user/user_profile.php'><img src='upload-files/$user_img'></a>   
+                    </div>
+                        
+                    ";
+                } else {
+                    echo "
+                    <div class='profile'>
+                    <a href='account.php'><img src='images/profile-1.png'></a>   
+                    </div>   
+                    ";
+                }
+
+                ?>
+
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
@@ -60,7 +93,34 @@ include("config.php");
             $total = 0;
             $ip = get_ip();
 
-            $run_cart = mysqli_query($con, "select * from cart where ip_address='$ip'");
+            $run_cart = mysqli_query($con, "select * from cart where ip_address='$ip' and user_id='$user_id'");
+            $count_items = mysqli_num_rows($run_cart);
+
+            if ($count_items == 0) {
+                echo "
+                <tr>
+                        <td>
+                            <div class='cart-info'>
+                                Cart is empty
+                                <div>
+                                    <p><?php echo ; ?></p>
+                                    
+                                    <br>
+                                    
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                            <?php echo; ?>
+                            </div>
+                            <!-- <input type='number' name='qty' value=''> -->
+                        </td>
+                        <td>Rs.<?php echo; ?>.00</td>
+                    </tr>
+                    
+                ";
+            }
 
             while ($fetch_cart = mysqli_fetch_array($run_cart)) {
                 $product_id = $fetch_cart['product_id'];
@@ -100,11 +160,29 @@ include("config.php");
                                     <p><?php echo $product_title; ?></p>
                                     <small>price: Rs.<?php echo $sing_price; ?>.00</small>
                                     <br>
-                                    <a href="" name="remove">Remove</a>
+                                    <a href="cart.php?remove=<?php echo $product_id; ?>" name="remove">Remove</a>
                                 </div>
+
+                                <?php
+                                // Check if the 'remove' parameter is set in the URL
+                                if (isset($_GET['remove'])) {
+                                    $remove_id = $_GET['remove'];
+
+                                    // Remove the item from the cart based on the product_id
+                                    mysqli_query($con, "DELETE FROM cart WHERE product_id = '$remove_id' AND user_id='$user_id'");
+
+                                    // Redirect to the cart page to refresh the cart display
+                                    header("Location: cart.php");
+                                }
+                                ?>
                             </div>
                         </td>
-                        <td><input type="number" name="qty" value="<?php echo $qty; ?>"></td>
+                        <td>
+                            <div>
+                                <?php echo $qty; ?>
+                            </div>
+                            <!-- <input type="number" name="qty" value=""> -->
+                        </td>
                         <td>Rs.<?php echo $values_qty; ?>.00</td>
                     </tr>
 
@@ -131,15 +209,11 @@ include("config.php");
                 <tr>
                     <td></td>
                     <form id="checkout" method="post">
-                    <td><a href="checkout.php" class="checkout_btn">CheckOut</a></td>
+                        <td><a href="checkout.php" class="checkout_btn">CheckOut</a></td>
                     </form>
                 </tr>
             </table>
         </div>
-
-        <?php
-
-        ?>
 
 
     </div>

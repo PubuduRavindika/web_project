@@ -28,19 +28,48 @@ include("config.php");
                         <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
-                        <li><a href="account.php">Account</a></li>
+                        <li><a href="account.php">Log In</a></li>
                     </ul>
                 </nav>
                 <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
                 <div class="noti_cart_number">
-                    <?php
-                    $ip = get_ip();
+                <?php
+                    if (isset($_SESSION['user_id'])) {
+                        $user_id = $_SESSION['user_id'];
 
-                    $run_items = mysqli_query($con, "select * from cart where ip_address='$ip'");
+                        $ip = get_ip();
 
-                    echo $count_items = mysqli_num_rows($run_items);
+                        $run_items = mysqli_query($con, "select * from cart where ip_address='$ip' and user_id='$user_id'");
+
+                        echo $count_items = mysqli_num_rows($run_items);
+                    }
                     ?>
                 </div>
+
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+
+                    $run_query_by_id = mysqli_query($con, "select * from users where id = '$user_id'");
+                    while ($row_user = mysqli_fetch_array($run_query_by_id)) {
+                        $user_img = $row_user['image'];
+                    }
+                    echo "
+                    <div class='profile'>
+                    <a href='user/user_profile.php'><img src='upload-files/$user_img'></a>   
+                    </div>
+                        
+                    ";
+                } else {
+                    echo "
+                    <div class='profile'>
+                    <a href='account.php'><img src='images/profile-1.png'></a>   
+                    </div>   
+                    ";
+                }
+
+                ?>
+
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
@@ -52,30 +81,29 @@ include("config.php");
     <div class="small-container single-product">
         <div class="row">
 
-        <?php
-        if(isset($_GET['pro_id'])){
-            $product_id = $_GET['pro_id'];
+            <?php
+            if (isset($_GET['pro_id'])) {
+                $product_id = $_GET['pro_id'];
 
-            $run_query_by_pro_id = mysqli_query($con, "select * from products where product_id = '$product_id'");
+                $run_query_by_pro_id = mysqli_query($con, "select * from products where product_id = '$product_id'");
 
-            while($row_pro = mysqli_fetch_array($run_query_by_pro_id)){
+                while ($row_pro = mysqli_fetch_array($run_query_by_pro_id)) {
 
-                $pro_id = $row_pro['product_id'];
-                $pro_cat = $row_pro['product_cat'];
-                $pro_brand = $row_pro['product_brand'];
-                $pro_title = $row_pro['product_title'];
-                $pro_price = $row_pro['product_price'];
-                $pro_desc = $row_pro['product_desc'];
-                $pro_img_01 = $row_pro['product_img_01'];
-                $pro_img_02 = $row_pro['product_img_02'];
-                $pro_img_03 = $row_pro['product_img_03'];
-                $pro_img_04 = $row_pro['product_img_04'];
-                $pro_img_05 = $row_pro['product_img_05'];
+                    $pro_id = $row_pro['product_id'];
+                    $pro_cat = $row_pro['product_cat'];
+                    $pro_brand = $row_pro['product_brand'];
+                    $pro_title = $row_pro['product_title'];
+                    $pro_price = $row_pro['product_price'];
+                    $pro_desc = $row_pro['product_desc'];
+                    $pro_img_01 = $row_pro['product_img_01'];
+                    $pro_img_02 = $row_pro['product_img_02'];
+                    $pro_img_03 = $row_pro['product_img_03'];
+                    $pro_img_04 = $row_pro['product_img_04'];
+                    $pro_img_05 = $row_pro['product_img_05'];
 
 
-                echo "
-                <div class='col-2'>
-
+                    echo "
+                <div class='col-2-img'>
                 <img src='admin/product_imgs/$pro_img_01' width='100%' id='productImg'>
 
                 <div class='small-img-row'>
@@ -101,53 +129,62 @@ include("config.php");
                 <h1>$pro_title</h1>
                 <h4>Rs.$pro_price.00</h4>
 
-                <select>
-                    <option>Select Color</option>
-                    <option>Red</option>
-                    <option>Black</option>
-                    <option>Brown</option>
-                </select>
+                <div class='instock'>In Stock</div>
 
-                <input type='number' value='1'>
-                <a href='product_details.php?add_cart=$pro_id' class='btn'>Add to Cart</a>
-
+                <input id = 'pro_quantity' name = 'quantity' type='number' value='1' min='1'>
+                <button  class = 'add-btn' onclick = 'addToCart()'>Add to Cart</button>
+                <p id = 'product_id' style = 'display:none;'>$pro_id</p>
                 <h3>Product Details <i class='fa fa-indent'></i></h3>
                 <br>
                 <p>$pro_desc</p>
             </div>
                 ";
+                }
             }
-        }
-    ?>     
+            ?>
         </div>
+        <!-- <a href='product_details.php?add_cart=$pro_id && quantity=1' class='btn'>Add to Cart</a> -->
     </div>
-
-    <?php
-    if(isset($_GET['add_cart'])){
-        
-        $product_id = $_GET['add_cart'];
-
-        $run_check_pro = mysqli_query($con, "select * from cart where product_id='$product_id'");
-
-        if(mysqli_num_rows($run_check_pro) > 0){
-            echo "";
+    <script>
+        function addToCart() {
+            var pro_id = document.getElementById("product_id").innerHTML;
+            var quantity = document.getElementById("pro_quantity").value;
+            var url = "product_details.php?add_cart=" + pro_id + "&&quantity=" + quantity;
+            window.location.href = url;
         }
-        else{
+    </script>
+    <?php
+    if (isset($_GET['add_cart'])) {
 
-            $fetch_pro = mysqli_query($con, "select * from products where product_id='$product_id'");
-            $fetch_pro = mysqli_fetch_array($fetch_pro);
-            $pro_title = $fetch_pro['product_title'];
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
 
-            $ip = get_ip();
+            $product_id = $_GET['add_cart'];
+            $quantity = $_GET['quantity'];
 
-            $run_insert_pro = mysqli_query($con, "insert into cart (product_id, product_title, ip_address) values('$product_id', '$pro_title', '$ip')");
-            
-            if ($run_insert_pro) {
-                header("location:products.php");
-              } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($con);
-              }
+            $run_check_pro = mysqli_query($con, "select * from cart where product_id='$product_id' and user_id='$user_id'");
 
+            if (mysqli_num_rows($run_check_pro) > 0) {
+                echo "";
+
+            } else {
+
+                $fetch_pro = mysqli_query($con, "select * from products where product_id='$product_id'");
+                $fetch_pro = mysqli_fetch_array($fetch_pro);
+                $pro_title = $fetch_pro['product_title'];
+
+                $ip = get_ip();
+
+                $run_insert_pro = mysqli_query($con, "insert into cart (product_id, user_id, product_title, ip_address, quantity) values('$product_id', '$user_id', '$pro_title', '$ip', '$quantity')");
+
+                if ($run_insert_pro) {
+                    header("location:products.php");
+                } else {
+                    echo "Error: " . $sql . "<br>" . mysqli_error($con);
+                }
+            }
+        } else {
+            header("location:account.php");
         }
 
     }
@@ -168,58 +205,58 @@ include("config.php");
     <div class="small-container">
 
 
-        <div class="row">
-            <div class="col-4">
-                <img src="images/Guitar_01.png">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+        <div class="fearured-products">
 
-            <div class="col-4">
-                <img src="images/Violin_01.png">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+            <?php
 
-            <div class="col-4">
-                <img src="images/Guitar_03.png">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+            if (isset($_GET['pro_id'])) {
+                $product_id = $_GET['pro_id'];
 
-            <div class="col-4">
-                <img src="images/Drum_01.png">
-                <h4>Red Printed T-Shirt</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+
+                $get_pro = "SELECT * FROM products ORDER BY product_id DESC";
+                $run_pro = mysqli_query($con, $get_pro);
+
+                $count = 0; // Initialize counter variable
+
+                while ($row_pro = mysqli_fetch_array($run_pro)) {
+                    $pro_id = $row_pro['product_id'];
+                    $pro_cat = $row_pro['product_cat'];
+                    $pro_brand = $row_pro['product_brand'];
+                    $pro_title = $row_pro['product_title'];
+                    $pro_price = $row_pro['product_price'];
+                    $pro_desc = $row_pro['product_desc'];
+                    $pro_img_01 = $row_pro['product_img_01'];
+                    $pro_img_02 = $row_pro['product_img_02'];
+                    $pro_img_03 = $row_pro['product_img_03'];
+                    $pro_img_04 = $row_pro['product_img_04'];
+                    $pro_img_05 = $row_pro['product_img_05'];
+
+                    if ($pro_id !== $product_id) {
+                        echo "
+                        <div class='col-4 item_holder product_brand_$pro_brand product_category_$pro_cat'>
+                        <a href='product_details.php?pro_id=$pro_id'><img src='admin/product_imgs/$pro_img_01'></a>
+                        <a href='product_details.php'><h4>$pro_title</h4></a>
+                        <div class='rating'>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star'></i>
+                        <i class='fa fa-star-o'></i>
+                        </div>
+                        <p>Rs.$pro_price.00</p>
+                        </div>
+                        ";
+                    }
+
+                    $count++; // Increment the counter
+
+                    if ($count >= 5) {
+                        break; // Exit the loop once 4 items are displayed
+                    }
+                }
+            }
+            ?>
+
         </div>
     </div>
 
@@ -277,12 +314,10 @@ include("config.php");
 
         menuItems.style.maxHeight = "0px";
 
-        function menutoggle(){
-            if(menuItems.style.maxHeight == "0px"){
+        function menutoggle() {
+            if (menuItems.style.maxHeight == "0px") {
                 menuItems.style.maxHeight = "200px";
-            }
-
-            else{
+            } else {
                 menuItems.style.maxHeight = "0px";
             }
         }

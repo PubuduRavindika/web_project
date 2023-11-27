@@ -28,7 +28,7 @@ include("../config.php");
         </div>
         <div class="sub_container">
             <div class="left">
-                <a href="index.php">
+                <a href="view_product.php?action=view_pro">
                     <div class="cell">Genaral</div>
                 </a>
                 <a href="insert_product.php">

@@ -14,14 +14,14 @@ body{
 }
 
 .navbar{
-    display: flex;
-    align-items: center;
-    padding: 20px;
+    display: flex !important;
+    align-items: center !important;
+    padding: 20px !important;
 }
 
 nav{
-    flex: 1;
-    text-align: right;
+    flex: 1 !important;
+    text-align: right !important;
 }
 
 nav ul{
@@ -32,6 +32,14 @@ nav ul{
 nav ul li{
     display: inline-block;
     margin-right: 20px;
+}
+
+.header{
+    background: radial-gradient(#fff,#ffd6d6);
+}
+
+.header .row{
+    margin-top: 70px;
 }
 
 a{
@@ -247,6 +255,17 @@ ul{
     cursor: pointer;
     border: none !important;
 } 
+
+.noti_cart_number{
+    background: red;
+    color: white;
+    top: -5px;
+    margin-left: -6px;
+    margin-top: -10px;
+    padding: 2px;
+    border-radius: 50%;
+    
+}
 
 .checkout_btn:hover{
     background:#563434;

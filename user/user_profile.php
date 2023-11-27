@@ -1,6 +1,10 @@
 <?php
 session_start();
 include("../config.php");
+
+if(!isset($_SESSION['email'])){
+    header("location:../account.php");
+}
 ?>
 
 
@@ -20,7 +24,7 @@ include("../config.php");
 
     <div class="header">
         <div class="container">
-            <div class="navbar">
+        <div class="navbar">
                 <div class="logo">
                     <a href="index.php"><img src="../images/web-logo.png" width="125px"></a>
                 </div>
@@ -30,28 +34,66 @@ include("../config.php");
                         <li><a href="../products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
-                        <li><a href="../account.php">Account</a></li>
-                        <li><a href="../logout.php">Logout</a></li>
+                        <li><a href="../account.php">Log In</a></li>
                     </ul>
                 </nav>
-                <a href="cart.php"><img src="../images/cart.png" width="30px" height="30px"></a>
+                <a href="../cart.php"><img src="../images/cart.png" width="30px" height="30px"></a>
                 <div class="noti_cart_number">
-                    <?php
-                    $ip = get_ip();
+                <?php
+                    if (isset($_SESSION['user_id'])) {
+                        $user_id = $_SESSION['user_id'];
 
-                    $run_items = mysqli_query($con, "select * from cart where ip_address='$ip'");
+                        $ip = get_ip();
 
-                    echo $count_items = mysqli_num_rows($run_items);
+                        $run_items = mysqli_query($con, "select * from cart where ip_address='$ip' and user_id='$user_id'");
+
+                        echo $count_items = mysqli_num_rows($run_items);
+                    }
                     ?>
                 </div>
 
-                <div class="profile">
-                    <a href="account.php"><img src="../images/profile-1.png"></a>
-                </div>
-                <img src="../images/menu.png" class="menu-icon" onclick="menutoggle()">
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
+
+                    $run_query_by_id = mysqli_query($con, "select * from users where id = '$user_id'");
+                    while ($row_user = mysqli_fetch_array($run_query_by_id)) {
+                        $user_img = $row_user['image'];
+                    }
+                    echo "
+                    <div class='profile'>
+                    <a href='user_profile.php'><img src='../upload-files/$user_img'></a>   
+                    </div>
+                        
+                    ";  
+                }
+                else {
+                    echo "
+                    <div class='profile'>
+                    <a href='account.php'><img src='../images/profile-1.png'></a>   
+                    </div>   
+                    ";
+                }
+
+                ?>
+
+                <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
         </div>
     </div>
+
+    <?php
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+
+        $run_query_by_id = mysqli_query($con, "select * from users where id = '$user_id'");
+        while ($row_user = mysqli_fetch_array($run_query_by_id)) {
+            $user_img = $row_user['image'];
+            $user_name = $row_user['name'];
+            $user_email = $row_user['email'];
+        }
+    }
+    ?>
 
     <div class="sub_container">
         <div class="container light-style flex-grow-1 container-p-y">
@@ -64,14 +106,20 @@ include("../config.php");
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Info</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-social-links">Social links</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-connections">Connections</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="../logout.php">Log Out</a>
+                            <a class="list-group-item list-group-item-action" href="../logout.php">Log Out</a>
                         </div>
                     </div>
+                    
                     <div class="col-md-9">
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="account-general">
                                 <div class="card-body media align-items-center">
-                                    <img src="../images/profile-1.png" alt class="d-block ui-w-80">
+                                    <?php
+                                    echo"
+                                    <img src='../upload-files/$user_img' alt class='d-block ui-w-80'>
+                                    ";
+                                    
+                                    ?> 
                                     <div class="media-body ml-4">
                                         <label class="checkout_btn">
                                             Upload new photo
@@ -84,20 +132,20 @@ include("../config.php");
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="form-label">Username</label>
-                                        <input type="text" class="form-control mb-1" value="nmaxwell">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Name</label>
-                                        <input type="text" class="form-control" value="Nelle Maxwell">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">E-mail</label>
-                                        <input type="text" class="form-control mb-1" value="nmaxwell@mail.com">
+                                        <?php
+                                        echo"
+                                        <input type='text' class='form-control mb-1' value='$user_name'>
+                                        ";
+                                        ?>
                                         
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Company</label>
-                                        <input type="text" class="form-control" value="Company Ltd.">
+                                        <label class="form-label">E-mail</label>
+                                        <?php
+                                        echo"
+                                        <input type='text' class='form-control mb-1' value='$user_email'>
+                                        ";
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -152,13 +200,13 @@ include("../config.php");
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="account-social-links">
-                                
+
                             </div>
                             <div class="tab-pane fade" id="account-connections">
-                                
+
                             </div>
                             <div class="tab-pane fade" id="account-notifications">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -169,6 +217,7 @@ include("../config.php");
                 <button type="button" class="btn btn-default">Cancel</button>
             </div>
         </div>
+        
 
 
     </div>

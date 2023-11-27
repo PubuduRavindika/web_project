@@ -29,7 +29,7 @@ include("../config.php");
 
         <div class="sub_container">
             <div class="left">
-                <a href="index.php"><div class="cell">Genaral</div></a>
+                <a href="view_product.php?action=view_pro"><div class="cell">Genaral</div></a>
                 <a href="insert_product.php"><div class="cell">Insert Product</div></a>
                 <a href="category.php"><div class="cell">Add Category</div></a>
                 <a href="brands.php"><div class="cell">Add Brands</div></a>

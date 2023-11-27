@@ -30,42 +30,48 @@ include("config.php");
                         <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
                         <li><a href="">Conatact</a></li>
-                        <li><a href="user/user_profile.php">Account</a></li>
-                        <li><a href="logout.php">Logout</a></li>
+                        <li><a href="account.php">Log In</a></li>
                     </ul>
                 </nav>
                 <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
                 <div class="noti_cart_number">
-                    <?php
-                    $ip = get_ip();
+                <?php
+                    if (isset($_SESSION['user_id'])) {
+                        $user_id = $_SESSION['user_id'];
 
-                    $run_items = mysqli_query($con, "select * from cart where ip_address='$ip'");
+                        $ip = get_ip();
 
-                    echo $count_items = mysqli_num_rows($run_items);
+                        $run_items = mysqli_query($con, "select * from cart where ip_address='$ip' and user_id='$user_id'");
+
+                        echo $count_items = mysqli_num_rows($run_items);
+                    }
                     ?>
                 </div>
 
                 <?php
-                    if(!isset($_SESSION['email'])){   
+                if (isset($_SESSION['user_id'])) {
+                    $user_id = $_SESSION['user_id'];
 
-                        echo "
-                        <div class='profile'>
-                        <a href='account.php'><img src='images/profile-2.png'></a>   
-                        </div>
-                        
-                        ";
+                    $run_query_by_id = mysqli_query($con, "select * from users where id = '$user_id'");
+                    while ($row_user = mysqli_fetch_array($run_query_by_id)) {
+                        $user_img = $row_user['image'];
                     }
+                    echo "
+                    <div class='profile'>
+                    <a href='user/user_profile.php'><img src='upload-files/$user_img'></a>   
+                    </div>
+                        
+                    ";
+                } else {
+                    echo "
+                    <div class='profile'>
+                    <a href='account.php'><img src='images/profile-1.png'></a>   
+                    </div>   
+                    ";
+                }
 
-                    else{
-                        echo "
-                        <div class='profile'>
-                        <a href='account.php'><img src='images/profile-1.png'></a>   
-                        </div>
-                        
-                        ";
-                    }
                 ?>
-                
+
                 <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
             </div>
 
@@ -73,7 +79,7 @@ include("config.php");
                 <div class="col-2">
                     <h1>Elevate Your Melody<br>TUNE MART!</h1>
                     <p>Welcome to our online music instrument store,<br>where we're dedicated to elevating your musical journey.</p>
-                    <a href="" class="btn">Explore Now &#8594;</a>
+                    <a href="products.php" class="btn">Explore Now &#8594;</a>
                 </div>
                 <div class="col-2">
                     <img src="images/cover.png">
@@ -104,180 +110,102 @@ include("config.php");
 
     <div class="small-container">
         <h2 class="title">Fearured Product</h2>
-        <div class="row">
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Guitar_01.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+        <div class="fearured-products">
 
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Violin_01.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+            <?php
+            $get_pro = "select * from products";
+            $run_pro = mysqli_query($con, $get_pro);
 
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Guitar_03.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+            $count = 0; // Initialize counter variable
 
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Drum_01.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
+            while ($row_pro = mysqli_fetch_array($run_pro)) {
+                $pro_id = $row_pro['product_id'];
+                $pro_cat = $row_pro['product_cat'];
+                $pro_brand = $row_pro['product_brand'];
+                $pro_title = $row_pro['product_title'];
+                $pro_price = $row_pro['product_price'];
+                $pro_desc = $row_pro['product_desc'];
+                $pro_img_01 = $row_pro['product_img_01'];
+                $pro_img_02 = $row_pro['product_img_02'];
+                $pro_img_03 = $row_pro['product_img_03'];
+                $pro_img_04 = $row_pro['product_img_04'];
+                $pro_img_05 = $row_pro['product_img_05'];
+
+                echo "
+                <div class='col-4 item_holder product_brand_$pro_brand product_category_$pro_cat'>
+                <a href='product_details.php?pro_id=$pro_id'><img src='admin/product_imgs/$pro_img_01'></a>
+                <a href='product_details.php'><h4>$pro_title</h4></a>
+                <div class='rating'>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star-o'></i>
                 </div>
-                <p>Rs.500.00</p>
-            </div>
+                <p>Rs.$pro_price.00</p>
+                </div>
+                ";
+
+                $count++; // Increment the counter
+
+                if ($count >= 4) {
+                    break; // Exit the loop once 4 items are displayed
+                }
+            }
+            ?>
+
         </div>
+
+
+
+
         <h2 class="title">Latest Product</h2>
+        <div class="fearured-products">
 
-        <div class="row">
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Guitar_01.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+            <?php
+            $get_pro = "SELECT * FROM products ORDER BY product_id DESC";
+            $run_pro = mysqli_query($con, $get_pro);
 
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Guitar_02.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+            $count = 0; // Initialize counter variable
 
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Violin_01.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
+            while ($row_pro = mysqli_fetch_array($run_pro)) {
+                $pro_id = $row_pro['product_id'];
+                $pro_cat = $row_pro['product_cat'];
+                $pro_brand = $row_pro['product_brand'];
+                $pro_title = $row_pro['product_title'];
+                $pro_price = $row_pro['product_price'];
+                $pro_desc = $row_pro['product_desc'];
+                $pro_img_01 = $row_pro['product_img_01'];
+                $pro_img_02 = $row_pro['product_img_02'];
+                $pro_img_03 = $row_pro['product_img_03'];
+                $pro_img_04 = $row_pro['product_img_04'];
+                $pro_img_05 = $row_pro['product_img_05'];
 
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Drum_01.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
+                echo "
+                <div class='col-4 item_holder product_brand_$pro_brand product_category_$pro_cat'>
+                <a href='product_details.php?pro_id=$pro_id'><img src='admin/product_imgs/$pro_img_01'></a>
+                <a href='product_details.php'><h4>$pro_title</h4></a>
+                <div class='rating'>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star-o'></i>
                 </div>
-                <p>Rs.500.00</p>
-            </div>
+                <p>Rs.$pro_price.00</p>
+                </div>
+                ";
+
+                $count++; // Increment the counter
+
+                if ($count >= 4) {
+                    break; // Exit the loop once 4 items are displayed
+                }
+            }
+            ?>
+
         </div>
-
-        <div class="row">
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Violin_02.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
-
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Guitar_03.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
-
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Drum_01.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
-
-            <div class="col-4">
-                <a href="product_details.php"><img src="images/Guitar_01.png"></a>
-                <a href="product_details.php"></a>
-                <h4>Clasic Guitar</h4></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>Rs.500.00</p>
-            </div>
-        </div>
+        
     </div>
 
     <!-- ---------------offer----------------- -->

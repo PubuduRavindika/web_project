@@ -2,7 +2,7 @@
 session_start();
 include("../config.php");
 
-if(!isset($_SESSION['email'])){
+if (!isset($_SESSION['email'])) {
     header("location:../account.php");
 }
 ?>
@@ -24,7 +24,7 @@ if(!isset($_SESSION['email'])){
 
     <div class="header">
         <div class="container">
-        <div class="navbar">
+            <div class="navbar">
                 <div class="logo">
                     <a href="index.php"><img src="../images/web-logo.png" width="125px"></a>
                 </div>
@@ -39,7 +39,7 @@ if(!isset($_SESSION['email'])){
                 </nav>
                 <a href="../cart.php"><img src="../images/cart.png" width="30px" height="30px"></a>
                 <div class="noti_cart_number">
-                <?php
+                    <?php
                     if (isset($_SESSION['user_id'])) {
                         $user_id = $_SESSION['user_id'];
 
@@ -65,9 +65,8 @@ if(!isset($_SESSION['email'])){
                     <a href='user_profile.php'><img src='../upload-files/$user_img'></a>   
                     </div>
                         
-                    ";  
-                }
-                else {
+                    ";
+                } else {
                     echo "
                     <div class='profile'>
                     <a href='account.php'><img src='../images/profile-1.png'></a>   
@@ -102,24 +101,23 @@ if(!isset($_SESSION['email'])){
                     <div class="col-md-3 pt-0">
                         <div class="list-group list-group-flush account-settings-links">
                             <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-info">Info</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-social-links">Social links</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-connections">Connections</a>
+                            <a class="list-group-item list-group-item-action" href="my_order.php">My Orders</a>
+                            <a class="list-group-item list-group-item-action" href="change_password.php">Change password</a>
+                            
                             <a class="list-group-item list-group-item-action" href="../logout.php">Log Out</a>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-9">
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="account-general">
                                 <div class="card-body media align-items-center">
                                     <?php
-                                    echo"
+                                    echo "
                                     <img src='../upload-files/$user_img' alt class='d-block ui-w-80'>
                                     ";
-                                    
-                                    ?> 
+
+                                    ?>
                                     <div class="media-body ml-4">
                                         <label class="checkout_btn">
                                             Upload new photo
@@ -133,16 +131,16 @@ if(!isset($_SESSION['email'])){
                                     <div class="form-group">
                                         <label class="form-label">Username</label>
                                         <?php
-                                        echo"
+                                        echo "
                                         <input type='text' class='form-control mb-1' value='$user_name'>
                                         ";
                                         ?>
-                                        
+
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">E-mail</label>
                                         <?php
-                                        echo"
+                                        echo "
                                         <input type='text' class='form-control mb-1' value='$user_email'>
                                         ";
                                         ?>
@@ -165,39 +163,13 @@ if(!isset($_SESSION['email'])){
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+
                             <div class="tab-pane fade" id="account-info">
-                                <div class="card-body pb-2">
-                                    <div class="form-group">
-                                        <label class="form-label">Bio</label>
-                                        <textarea class="form-control" rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc arcu, dignissim sit amet sollicitudin iaculis, vehicula id urna. Sed luctus urna nunc. Donec fermentum, magna sit amet rutrum pretium, turpis dolor molestie diam, ut lacinia diam risus eleifend sapien. Curabitur ac nibh nulla. Maecenas nec augue placerat, viverra tellus non, pulvinar risus.</textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Birthday</label>
-                                        <input type="text" class="form-control" value="May 3, 1995">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Country</label>
-                                        <select class="custom-select">
-                                            <option>USA</option>
-                                            <option selected>Canada</option>
-                                            <option>UK</option>
-                                            <option>Germany</option>
-                                            <option>France</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <hr class="border-light m-0">
-                                <div class="card-body pb-2">
-                                    <h6 class="mb-4">Contacts</h6>
-                                    <div class="form-group">
-                                        <label class="form-label">Phone</label>
-                                        <input type="text" class="form-control" value="+0 (123) 456 7891">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Website</label>
-                                        <input type="text" class="form-control" value>
-                                    </div>
-                                </div>
+             
                             </div>
                             <div class="tab-pane fade" id="account-social-links">
 
@@ -217,7 +189,7 @@ if(!isset($_SESSION['email'])){
                 <button type="button" class="btn btn-default">Cancel</button>
             </div>
         </div>
-        
+
 
 
     </div>

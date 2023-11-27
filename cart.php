@@ -155,7 +155,7 @@ if (!isset($_SESSION['email'])) {
                     <tr>
                         <td>
                             <div class="cart-info">
-                                <img src="images/<?php echo $product_image; ?>">
+                                <img src="admin/product_imgs/<?php echo $product_image; ?>">
                                 <div>
                                     <p><?php echo $product_title; ?></p>
                                     <small>price: Rs.<?php echo $sing_price; ?>.00</small>

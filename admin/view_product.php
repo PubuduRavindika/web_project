@@ -78,7 +78,7 @@ include("../config.php");
                                 ?>
                                     <tbody>
                                         <tr>
-                                            <td class="cell_details"><?php echo $i; ?></td>
+                                            <td class="cell_details"><?php echo $row['product_id']; ?></td>
                                             <td class="cell_details"><?php echo $row['product_title']; ?></td>
                                             <td class="cell_details"><?php echo "Rs. ";
                                                                         echo $row['product_price'];

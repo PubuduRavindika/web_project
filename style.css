@@ -570,6 +570,13 @@ th:last-child{
     background:#563434;
 }
 
+.checkout-topic{
+    text-align: center;
+    margin-top: -40px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
 
 /*------ account page ------*/
 

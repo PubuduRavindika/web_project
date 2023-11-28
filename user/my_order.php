@@ -39,7 +39,7 @@ $result_orders = mysqli_query($con, $order_query);
                         <li><a href="../index.php">Home</a></li>
                         <li><a href="../products.php">Product</a></li>
                         <li><a href="">About</a></li>
-                        <li><a href="">Conatact</a></li>
+                        <li><a href="../contact.php">Conatact</a></li>
                         <li><a href="../account.php">Log In</a></li>
                     </ul>
                 </nav>

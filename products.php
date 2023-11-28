@@ -27,7 +27,7 @@ include("config.php");
                         <li><a href="index.php">Home</a></li>
                         <li><a href="products.php">Product</a></li>
                         <li><a href="">About</a></li>
-                        <li><a href="">Conatact</a></li>
+                        <li><a href="contact.php">Conatact</a></li>
                         <li><a href="account.php">Log In</a></li>
                     </ul>
                 </nav>
@@ -80,7 +80,7 @@ include("config.php");
         <div class="row row-2">
             <h2>All Products</h2>
             <div class="search-container">
-                <input type="text" name="user_query" class="search" placeholder="Search">
+                <input type="text" id="searchInput" name="user_query" class="search" placeholder="Search">
                 <div name="search" class="btn search-btn">Search</div>
                 <!-- <input type="submit" name="search" value="search" class="btn search-btn"> -->
             </div>
@@ -139,6 +139,7 @@ include("config.php");
                 $pro_title = $row_pro['product_title'];
                 $pro_price = $row_pro['product_price'];
                 $pro_desc = $row_pro['product_desc'];
+                $pro_keyword = $row_pro['product_keywords'];
                 $pro_img_01 = $row_pro['product_img_01'];
                 $pro_img_02 = $row_pro['product_img_02'];
                 $pro_img_03 = $row_pro['product_img_03'];
@@ -147,20 +148,18 @@ include("config.php");
 
 
                 echo "
-                    <div class='col-4 item_holder product_brand_$pro_brand product_category_$pro_cat'>
-                    <a href='product_details.php?pro_id=$pro_id'><img src='admin/product_imgs/$pro_img_01'></a>
-                    <a href='product_details.php'><h4>$pro_title</h4></a>
-                    <div class='rating'>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star'></i>
-                        <i class='fa fa-star-o'></i>
-                    </div>
-                    <p>Rs.$pro_price.00</p>
-                    </div>
-                    
-                    ";
+        <div class='col-4 item_holder product_brand_$pro_brand product_category_$pro_cat' data-keyword='$pro_keyword'>
+            <a href='product_details.php?pro_id=$pro_id'><img src='admin/product_imgs/$pro_img_01'></a>
+            <a href='product_details.php'><h4>$pro_title</h4></a>
+            <div class='rating'>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star'></i>
+                <i class='fa fa-star-o'></i>
+            </div>
+            <p>Rs.$pro_price.00</p>
+        </div>";
             }
             ?>
 
@@ -240,64 +239,77 @@ include("config.php");
         }
 
         function sorter() {
-            itemBrandSort();
-            itemCategorySort();
+            itemBrandAndCategorySort();
         }
 
-        function itemBrandSort() {
-            var itemType = document.getElementById("brand_selector").value;
-            console.log(itemType);
-            itemHider(itemType);
+        function itemBrandAndCategorySort() {
+            var brandType = document.getElementById("brand_selector").value;
+            var categoryType = document.getElementById("category_selector").value;
 
-            if (itemType != 0) {
-                var tagName = "product_brand_" + itemType;
-                var displayItems = document.getElementsByClassName(tagName);
-                // console.log(typeof(displayItems));
-                var items = Array.from(displayItems);
-                items.forEach(item => {
+            itemHider(brandType, categoryType);
+
+            if (brandType != 0) {
+                var brandTagName = "product_brand_" + brandType;
+                var brandDisplayItems = document.getElementsByClassName(brandTagName);
+                var brandItems = Array.from(brandDisplayItems);
+                brandItems.forEach(item => {
                     if (window.getComputedStyle(item).getPropertyPriority("display") == "none")
                         item.style.display = "block";
                 });
             } else {
-                itemHider(itemType);
+                itemHider(brandType, categoryType);
             }
 
-
-        }
-
-        function itemCategorySort() {
-            var itemType = document.getElementById("category_selector").value;
-            console.log(itemType);
-            itemHider(itemType);
-
-            if (itemType != 0) {
-                var tagName = "product_category_" + itemType;
-                var displayItems = document.getElementsByClassName(tagName);
-                // console.log(typeof(displayItems));
-                var items = Array.from(displayItems);
-                items.forEach(item => {
+            if (categoryType != 0) {
+                var categoryTagName = "product_category_" + categoryType;
+                var categoryDisplayItems = document.getElementsByClassName(categoryTagName);
+                var categoryItems = Array.from(categoryDisplayItems);
+                categoryItems.forEach(item => {
                     if (window.getComputedStyle(item).getPropertyPriority("display") == "none")
                         item.style.display = "block";
                 });
             } else {
-                itemHider(itemType);
+                itemHider(brandType, categoryType);
             }
         }
 
-        function itemHider(itemType) {
+        function itemHider(brandType, categoryType) {
             var allItems = document.getElementsByClassName("item_holder");
             var items = Array.from(allItems);
-            if (itemType == 0) {
-                items.forEach(item => {
-                    item.style.display = "block";
-                });
 
-            } else {
-                items.forEach(item => {
+            items.forEach(item => {
+                var brandCondition = brandType == 0 || item.classList.contains("product_brand_" + brandType);
+                var categoryCondition = categoryType == 0 || item.classList.contains("product_category_" + categoryType);
+
+                if (brandCondition && categoryCondition) {
+                    item.style.display = "block";
+                } else {
                     item.style.display = "none";
-                });
-            }
+                }
+            });
         }
+
+
+        function searchProducts() {
+            var searchKeyword = document.getElementById("searchInput").value.toLowerCase();
+
+            var allItems = document.getElementsByClassName("item_holder");
+            var items = Array.from(allItems);
+
+            items.forEach(item => {
+                var productTitle = item.querySelector("h4").innerText.toLowerCase();
+                var productKeyword = item.dataset.keyword.toLowerCase();
+
+                // Check if the search keyword is present in the title or product_keyword
+                if (productTitle.includes(searchKeyword) || productKeyword.includes(searchKeyword)) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        document.querySelector(".search-btn").addEventListener("click", searchProducts);
     </script>
 
 

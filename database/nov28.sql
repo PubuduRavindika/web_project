@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2023 at 10:53 PM
+-- Generation Time: Nov 28, 2023 at 05:09 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.0.19
 
@@ -88,6 +88,31 @@ INSERT INTO `categories` (`cat_id`, `cat_title`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `id` int(11) NOT NULL,
+  `user_id` int(100) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `message` text DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `user_id`, `name`, `email`, `message`, `rating`, `created_at`) VALUES
+(7, 13, 'pubudu', 'user@gmail.com', 'wdwddw', 2, '2023-11-28 14:05:41'),
+(8, 13, 'user', 'user@gmail.com', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, nemo. Earum voluptas inventore, beatae provident consequuntur ipsam. Dolor excepturi cum earum vero. Quo maxime, commodi praesentium laudantium sed ad autem.', 5, '2023-11-28 14:24:44'),
+(9, 13, 'test', 'test@gmail.com', '123467', 4, '2023-11-28 15:56:47');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -103,9 +128,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `total_amount`, `order_date`) VALUES
-(10, 13, '20800.00', '2023-11-27 19:34:57'),
-(11, 13, '7000.00', '2023-11-27 19:36:26'),
-(12, 13, '1700.00', '2023-11-27 21:39:41');
+(22, 13, '40000.00', '2023-11-28 07:53:19'),
+(23, 13, '20000.00', '2023-11-28 07:56:04'),
+(24, 13, '20000.00', '2023-11-28 08:00:12'),
+(25, 13, '21600.00', '2023-11-28 15:53:13');
 
 -- --------------------------------------------------------
 
@@ -117,19 +143,20 @@ CREATE TABLE `order_items` (
   `order_item_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `status` varchar(50) DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_items`
 --
 
-INSERT INTO `order_items` (`order_item_id`, `order_id`, `product_id`, `quantity`) VALUES
-(7, 10, 34, 1),
-(8, 10, 17, 1),
-(9, 11, 16, 1),
-(10, 12, 14, 1),
-(11, 12, 15, 1);
+INSERT INTO `order_items` (`order_item_id`, `order_id`, `product_id`, `quantity`, `status`) VALUES
+(24, 22, 34, 2, 'Accepted'),
+(25, 23, 34, 1, 'Accepted'),
+(26, 24, 34, 1, 'Accepted'),
+(27, 25, 34, 1, 'Accepted'),
+(28, 25, 17, 2, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -158,10 +185,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `product_cat`, `product_brand`, `product_title`, `product_price`, `product_qty`, `product_desc`, `product_keywords`, `product_img_01`, `product_img_02`, `product_img_03`, `product_img_04`, `product_img_05`) VALUES
-(14, 1, 1, 'Guitar', 700, 2, 'test', 'test', 'Guitar_01.png', 'Guitar_02.png', 'Guitar_03.png', 'Guitar_02.png', 'Guitar_03.png'),
-(15, 2, 2, 'Classic Violin', 1000, 3, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, deleniti minus! Itaque eveniet labore quia adipisci iusto nulla dolorum nihil ab totam, ut ex tempora necessitatibus quos, pariatur dolor. Totam?', 'Fender Violin', 'Violin_01.png', 'Violin_02.png', 'Violin_01.png', 'Violin_02.png', 'Violin_01.png'),
+(14, 1, 1, 'Guitar', 700, 1, 'test', 'test', 'Guitar_01.png', 'Guitar_02.png', 'Guitar_03.png', 'Guitar_02.png', 'Guitar_03.png'),
+(15, 2, 2, 'Classic Violin', 1000, 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, deleniti minus! Itaque eveniet labore quia adipisci iusto nulla dolorum nihil ab totam, ut ex tempora necessitatibus quos, pariatur dolor. Totam?', 'Fender Violin', 'Violin_01.png', 'Violin_02.png', 'Violin_01.png', 'Violin_02.png', 'Violin_01.png'),
 (16, 3, 3, 'Acoustic Drum', 7000, 2, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, deleniti minus! Itaque eveniet labore quia adipisci iusto nulla dolorum nihil ab totam, ut ex tempora necessitatibus quos, pariatur dolor. Totam?', 'Gibsun Drum', 'Drum_01.png', 'Drum_01.png', 'Drum_01.png', 'Drum_01.png', 'Drum_01.png'),
-(17, 1, 2, 'Classic Guitar', 800, 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, deleniti minus! Itaque eveniet labore quia adipisci iusto nulla dolorum nihil ab totam, ut ex tempora necessitatibus quos, pariatur dolor. Totam?', 'Fender Guitar', 'Guitar_02.png', 'Guitar_01.png', 'Guitar_03.png', 'Guitar_01.png', 'Guitar_03.png'),
+(17, 1, 2, 'Classic Guitar', 800, 3, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, deleniti minus! Itaque eveniet labore quia adipisci iusto nulla dolorum nihil ab totam, ut ex tempora necessitatibus quos, pariatur dolor. Totam?', 'Fender Guitar', 'Guitar_02.png', 'Guitar_01.png', 'Guitar_03.png', 'Guitar_01.png', 'Guitar_03.png'),
 (34, 5, 1, 'Trumpet', 20000, 2, 'test test test', 'yamaha trumpet', '34_photo_1.png', 'Trumpet_02.png', 'Trumpet_03.png', 'Trumpet_04.png', 'Trumpet_05.png');
 
 -- --------------------------------------------------------
@@ -174,6 +201,19 @@ CREATE TABLE `product_colors` (
   `color_id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `color` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_ratings`
+--
+
+CREATE TABLE `product_ratings` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -222,6 +262,12 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`cat_id`);
 
 --
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -250,6 +296,14 @@ ALTER TABLE `product_colors`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `product_ratings`
+--
+ALTER TABLE `product_ratings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -269,7 +323,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `cart_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -278,16 +332,22 @@ ALTER TABLE `categories`
   MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -300,6 +360,12 @@ ALTER TABLE `products`
 --
 ALTER TABLE `product_colors`
   MODIFY `color_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_ratings`
+--
+ALTER TABLE `product_ratings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -329,6 +395,13 @@ ALTER TABLE `order_items`
 --
 ALTER TABLE `product_colors`
   ADD CONSTRAINT `product_colors_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+
+--
+-- Constraints for table `product_ratings`
+--
+ALTER TABLE `product_ratings`
+  ADD CONSTRAINT `product_ratings_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+  ADD CONSTRAINT `product_ratings_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

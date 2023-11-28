@@ -43,6 +43,9 @@ include("../config.php");
                 <a href="brands.php">
                     <div class="cell">Add Brands</div>
                 </a>
+                <a href="feedback.php">
+                    <div class="cell">User Feedbacks</div>
+                </a>
 
             </div>
             <div class="right">

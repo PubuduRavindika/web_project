@@ -37,6 +37,9 @@ include("../config.php");
                 <a href="category.php"><div class="cell">Add Category</div></a>
                 <a href="brands.php"><div class="cell">Add Brands</div></a>
                 <a href="insert_product.php"><div class="cell">Add Discounts</div></a>
+                <a href="feedback.php">
+                    <div class="cell">User Feedbacks</div>
+                </a>
             </div>
             <div class="right"></div>
         </div>

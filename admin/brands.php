@@ -43,7 +43,7 @@ include("../config.php");
                 <a href="brands.php">
                     <div class="cell">Add Brands</div>
                 </a>
-                <a href="insert_product.php">
+                <a href="discount.php">
                     <div class="cell">Add Discounts</div>
                 </a>
                 <a href="feedback.php">

@@ -26,7 +26,7 @@ include("config.php");
                     <ul id="menuItems">
                         <li><a href="index.php">Home</a></li>
                         <li><a href="products.php">Product</a></li>
-                        <li><a href="">About</a></li>
+                        <li><a href="about.php">About</a></li>
                         <li><a href="contact.php">Conatact</a></li>
                         <li><a href="account.php">Log In</a></li>
                     </ul>
@@ -80,7 +80,7 @@ include("config.php");
 
     <div class="small-container single-product">
         <div class="row">
-
+        
             <?php
             if (isset($_GET['pro_id'])) {
                 $product_id = $_GET['pro_id'];
@@ -131,17 +131,23 @@ include("config.php");
                 <h4>Rs.$pro_price.00</h4>
                 
                 <div class='instock'>In Stock</div>
-
                 <input id = 'pro_quantity' name = 'quantity' type='number' value='1' min='1'  max='$available_qty'>
                 <button  class = 'add-btn' onclick = 'addToCart()'>Add to Cart</button>
+                <br>
+                <a href='ratings.php?pro_id=$product_id' class='rate'>Rate Product</a>
                 <p id = 'product_id' style = 'display:none;'>$pro_id</p>
                 <h3>Product Details <i class='fa fa-indent'></i></h3>
                 <br>
                 <p>$pro_desc</p>
             </div>
                 ";
-                    }
-                    else{
+
+
+
+
+
+
+                    } else {
                         echo "
                 <div class='col-2-img'>
                 <img src='admin/product_imgs/$pro_img_01' width='100%' id='productImg'>
@@ -172,8 +178,11 @@ include("config.php");
                 <div class='outofstock'>Out Of Stock</div>
 
                 <input id = 'pro_quantity' name = 'quantity' type='number' value='1' min='1'  max='$available_qty'>
+                <br>
+                <a href='ratings.php?pro_id=$product_id' class='rate'>Rate Product</a>
                 <button  class = 'disable-btn' disabled onclick = 'addToCart()'>Add to Cart</button>
                 <p id = 'product_id' style = 'display:none;'>$pro_id</p>
+                
                 <h3>Product Details <i class='fa fa-indent'></i></h3>
                 <br>
                 <p>$pro_desc</p>
@@ -183,6 +192,10 @@ include("config.php");
                 }
             }
             ?>
+
+            
+           
+
         </div>
         <!-- <a href='product_details.php?add_cart=$pro_id && quantity=1' class='btn'>Add to Cart</a> -->
     </div>
@@ -235,7 +248,8 @@ include("config.php");
     <div class="small-container">
         <div class="row row-2">
             <h2>Related Products</h2>
-            <p>View More</p>
+            <!-- <p>View More</p> -->
+            <a href="products.php">View More</a>
         </div>
     </div>
 

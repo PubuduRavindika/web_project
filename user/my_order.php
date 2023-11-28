@@ -38,7 +38,7 @@ $result_orders = mysqli_query($con, $order_query);
                     <ul id="menuItems">
                         <li><a href="../index.php">Home</a></li>
                         <li><a href="../products.php">Product</a></li>
-                        <li><a href="">About</a></li>
+                        <li><a href="about.php">About</a></li>
                         <li><a href="../contact.php">Conatact</a></li>
                         <li><a href="../account.php">Log In</a></li>
                     </ul>

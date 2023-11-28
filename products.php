@@ -26,7 +26,7 @@ include("config.php");
                     <ul id="menuItems">
                         <li><a href="index.php">Home</a></li>
                         <li><a href="products.php">Product</a></li>
-                        <li><a href="">About</a></li>
+                        <li><a href="about.php">About</a></li>
                         <li><a href="contact.php">Conatact</a></li>
                         <li><a href="account.php">Log In</a></li>
                     </ul>
@@ -147,19 +147,62 @@ include("config.php");
                 $pro_img_05 = $row_pro['product_img_05'];
 
 
-                echo "
-        <div class='col-4 item_holder product_brand_$pro_brand product_category_$pro_cat' data-keyword='$pro_keyword'>
-            <a href='product_details.php?pro_id=$pro_id'><img src='admin/product_imgs/$pro_img_01'></a>
-            <a href='product_details.php'><h4>$pro_title</h4></a>
-            <div class='rating'>
-                <i class='fa fa-star'></i>
-                <i class='fa fa-star'></i>
-                <i class='fa fa-star'></i>
-                <i class='fa fa-star'></i>
-                <i class='fa fa-star-o'></i>
-            </div>
-            <p>Rs.$pro_price.00</p>
-        </div>";
+                echo "<div class='col-4 item_holder product_brand_$pro_brand product_category_$pro_cat' data-keyword='$pro_keyword'>
+                <a href='product_details.php?pro_id=$pro_id'><img src='admin/product_imgs/$pro_img_01'></a>
+                <a href='product_details.php'><h4>$pro_title</h4></a>";
+
+                // Check if the product has ratings
+                if (isset($row_pro['product_id'])) {
+                    $product_id = $row_pro['product_id'];
+
+                    // Retrieve ratings for the specified product ID
+                    $get_ratings_query = "SELECT * FROM ratings WHERE product_id = '$product_id'";
+                    $run_ratings_query = mysqli_query($con, $get_ratings_query);
+
+                    // Check if there are ratings for the product
+                    if (mysqli_num_rows($run_ratings_query) > 0) {
+                        $total_ratings = 0;
+                        $total_users = 0;
+
+                        // Loop through the ratings and calculate the total rating and user count
+                        while ($row = mysqli_fetch_assoc($run_ratings_query)) {
+                            $rating_value = $row['rating_value'];
+                            $total_ratings += $rating_value;
+                            $total_users++;
+                        }
+
+                        // Calculate the average rating
+                        $average_rating = $total_ratings / $total_users;
+
+                        // Display the average rating as stars
+                        echo "<div class='rating'>";
+                        for ($i = 1; $i <= 5; $i++) {
+                            if ($i <= $average_rating) {
+                                echo "<i class='fa fa-star'></i>"; // Filled star
+                            } else {
+                                echo "<i class='fa fa-star-o'></i>"; // Empty star
+                            }
+                        }
+                        echo "</div>";
+
+                        // Display the average rating as a decimal number
+                        // echo "<p>Average Rating: " . number_format($average_rating, 2) . "</p>";
+                    } else {
+                        echo "
+                        <div class='rating'>
+                        <i class='fa fa-star-o'></i>
+                        <i class='fa fa-star-o'></i>
+                        <i class='fa fa-star-o'></i>
+                        <i class='fa fa-star-o'></i>
+                        <i class='fa fa-star-o'></i>
+                        </div>
+                        ";
+                    }
+                } else {
+                    echo "<p>Product ID not provided.</p>";
+                }
+
+                echo "<p>Rs.$pro_price.00</p></div>";
             }
             ?>
 

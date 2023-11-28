@@ -32,7 +32,7 @@ if (!isset($_SESSION['email'])) {
                     <ul id="menuItems">
                         <li><a href="../index.php">Home</a></li>
                         <li><a href="../products.php">Product</a></li>
-                        <li><a href="">About</a></li>
+                        <li><a href="about.php">About</a></li>
                         <li><a href="../contact.php">Conatact</a></li>
                         <li><a href="../account.php">Log In</a></li>
                     </ul>
@@ -132,7 +132,7 @@ if (!isset($_SESSION['email'])) {
                                         <label class="form-label">Username</label>
                                         <?php
                                         echo "
-                                        <input type='text' class='form-control mb-1' value='$user_name'>
+                                        <input type='text' class='form-control mb-1' value='$user_name' id='username' onchange='enableSaveButton()'>
                                         ";
                                         ?>
 
@@ -141,7 +141,7 @@ if (!isset($_SESSION['email'])) {
                                         <label class="form-label">E-mail</label>
                                         <?php
                                         echo "
-                                        <input type='text' class='form-control mb-1' value='$user_email'>
+                                        <input type='text' class='form-control mb-1' value='$user_email' id='email' onchange='enableSaveButton()'>
                                         ";
                                         ?>
                                     </div>
@@ -185,7 +185,7 @@ if (!isset($_SESSION['email'])) {
                 </div>
             </div>
             <div class="text-right mt-3">
-                <button type="button" class="checkout_btn">Save changes</button>&nbsp;
+                <button type="button" class="checkout_btn" id="saveChangesBtn" onclick="saveChanges()">Save changes</button>&nbsp;
                 <button type="button" class="btn btn-default">Cancel</button>
             </div>
         </div>
@@ -193,6 +193,38 @@ if (!isset($_SESSION['email'])) {
 
 
     </div>
+    <script>
+    function enableSaveButton() {
+        // Enable the "Save changes" button
+        document.getElementById('saveChangesBtn').disabled = false;
+    }
+
+    function saveChanges() {
+        // Get updated values from input fields
+        var updatedUsername = document.getElementById('username').value;
+        var updatedEmail = document.getElementById('email').value;
+
+        // Send the updated values to the server using AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update_profile.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Handle the response from the server
+                if (xhr.responseText.trim() === 'success') {
+                    alert('Profile updated successfully');
+                    // Disable the "Save changes" button after saving
+                    document.getElementById('saveChangesBtn').disabled = true;
+                } else {
+                    alert('Failed to update profile. Please try again.');
+                }
+            }
+        };
+
+        // Send data to the server
+        xhr.send('username=' + encodeURIComponent(updatedUsername) + '&email=' + encodeURIComponent(updatedEmail));
+    }
+</script>
 
 
 

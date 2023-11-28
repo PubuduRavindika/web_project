@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
     $product_title = $_POST['product_title'];
     $product_price = $_POST['product_price'];
     $category_id = $_POST['category'];
+    $product_qty = $_POST['product_quantity'];
     $brand_id = $_POST['brand'];
     $product_description =  $_POST['product_description'];
 
@@ -14,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
     $update_query = "UPDATE products SET
                         product_title = '$product_title',
                         product_price = '$product_price',
+                        product_qty = '$product_qty',
                         product_cat = '$category_id',
                         product_brand = '$brand_id',
                         product_desc = '$product_description'
@@ -40,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
         echo "<script>alert('Product has been updated successfully!')</script>";
         echo "<script>window.open('view_product.php?action=view_pro','_self')</script>";
     } else {
+        echo "Error: " . mysqli_error($con);
         echo "<script>alert('Failed to update product!')</script>";
     }
 } else {

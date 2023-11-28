@@ -24,7 +24,7 @@ if (isset($_GET['product_id'])) {
 
     // Product quantity
     echo "<label for='product_quantity'>Product Quantity:</label>";
-    echo "<input min='1' type='number' name='product_quantity' value='" . $row['product_qty'] . "'><br>";
+    echo "<input min='0' type='number' name='product_quantity' value='" . $row['product_qty'] . "'><br>";
 
     // Product Description
     echo "<label for='product_description'>Product Description:</label>";

@@ -205,6 +205,10 @@ if (!isset($_SESSION['email'])) {
             $product_price = $fetch_product['product_price'];
             $values_qty = $product_price * $quantity;
             $total += $values_qty;
+
+            // Update product quantity in the database
+            $new_quantity = $fetch_product['product_qty'] - $quantity;
+            mysqli_query($con, "UPDATE products SET product_qty = $new_quantity WHERE product_id = $product_id");
         }
     }
     

@@ -31,6 +31,9 @@ include("../config.php");
                 <a href="view_product.php?action=view_pro">
                     <div class="cell">Genaral</div>
                 </a>
+                <a href="orders.php">
+                    <div class="cell">Orders</div>
+                </a>
                 <a href="insert_product.php">
                     <div class="cell">Insert Product</div>
                 </a>

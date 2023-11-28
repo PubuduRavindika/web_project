@@ -445,6 +445,19 @@ select:focus{
     border-radius: 5px;
 }
 
+.outofstock{
+    font-size: 18px;
+    font-weight: 550;
+    display: block;
+    padding: 4px;
+    margin-top: 20px;
+    border: 1px solid rgba(203, 0, 0, 0.833);
+    color: rgba(203, 0, 0, 0.833);
+    width: 130px;
+    text-align: center;
+    border-radius: 5px;
+}
+
 .single-product input{
     width: 50px;
     height: 40px;
@@ -487,6 +500,17 @@ input:focus{
 
 .add-btn:hover{
     background: #563434;
+}
+
+.disable-btn{
+    display: inline-block;
+    border: none;
+    background: #ff523ba1;
+    color: #fff;
+    padding: 8px 30px;
+    margin: 30px 0px;
+    border-radius: 30px;
+    transition: 0.5s;
 }
 
 

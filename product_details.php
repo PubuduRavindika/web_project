@@ -33,7 +33,7 @@ include("config.php");
                 </nav>
                 <a href="cart.php"><img src="images/cart.png" width="30px" height="30px"></a>
                 <div class="noti_cart_number">
-                <?php
+                    <?php
                     if (isset($_SESSION['user_id'])) {
                         $user_id = $_SESSION['user_id'];
 
@@ -100,9 +100,10 @@ include("config.php");
                     $pro_img_03 = $row_pro['product_img_03'];
                     $pro_img_04 = $row_pro['product_img_04'];
                     $pro_img_05 = $row_pro['product_img_05'];
+                    $available_qty = $row_pro['product_qty'];
 
-
-                    echo "
+                    if ($available_qty > 0) {
+                        echo "
                 <div class='col-2-img'>
                 <img src='admin/product_imgs/$pro_img_01' width='100%' id='productImg'>
 
@@ -128,10 +129,10 @@ include("config.php");
                 <p>Home / $pro_title</p>
                 <h1>$pro_title</h1>
                 <h4>Rs.$pro_price.00</h4>
-
+                
                 <div class='instock'>In Stock</div>
 
-                <input id = 'pro_quantity' name = 'quantity' type='number' value='1' min='1'>
+                <input id = 'pro_quantity' name = 'quantity' type='number' value='1' min='1'  max='$available_qty'>
                 <button  class = 'add-btn' onclick = 'addToCart()'>Add to Cart</button>
                 <p id = 'product_id' style = 'display:none;'>$pro_id</p>
                 <h3>Product Details <i class='fa fa-indent'></i></h3>
@@ -139,6 +140,46 @@ include("config.php");
                 <p>$pro_desc</p>
             </div>
                 ";
+                    }
+                    else{
+                        echo "
+                <div class='col-2-img'>
+                <img src='admin/product_imgs/$pro_img_01' width='100%' id='productImg'>
+
+                <div class='small-img-row'>
+                    <div class='small-img-col'>
+                        <img src='admin/product_imgs/$pro_img_02' width='100%' class='small-img'>
+                    </div>
+
+                    <div class='small-img-col'>
+                        <img src='admin/product_imgs/$pro_img_03' width='100%' class='small-img'>
+                    </div>
+
+                    <div class='small-img-col'>
+                        <img src='admin/product_imgs/$pro_img_04' width='100%' class='small-img'>
+                    </div>
+
+                    <div class='small-img-col'>
+                        <img src='admin/product_imgs/$pro_img_05' width='100%' class='small-img'>
+                    </div>
+                </div>
+            </div>
+            <div class='col-2'>
+                <p>Home / $pro_title</p>
+                <h1>$pro_title</h1>
+                <h4>Rs.$pro_price.00</h4>
+                
+                <div class='outofstock'>Out Of Stock</div>
+
+                <input id = 'pro_quantity' name = 'quantity' type='number' value='1' min='1'  max='$available_qty'>
+                <button  class = 'disable-btn' disabled onclick = 'addToCart()'>Add to Cart</button>
+                <p id = 'product_id' style = 'display:none;'>$pro_id</p>
+                <h3>Product Details <i class='fa fa-indent'></i></h3>
+                <br>
+                <p>$pro_desc</p>
+            </div>
+                ";
+                    }
                 }
             }
             ?>
@@ -166,7 +207,6 @@ include("config.php");
 
             if (mysqli_num_rows($run_check_pro) > 0) {
                 echo "";
-
             } else {
 
                 $fetch_pro = mysqli_query($con, "select * from products where product_id='$product_id'");
@@ -186,7 +226,6 @@ include("config.php");
         } else {
             header("location:account.php");
         }
-
     }
     ?>
 

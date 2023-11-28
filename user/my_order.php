@@ -149,7 +149,7 @@ $result_orders = mysqli_query($con, $order_query);
                                     $quantity = $row_order_item['quantity'];
                                     $total_price = $product_price * $quantity;
                                     $product_title = $row_order_item['product_title'];
-                                    $status = "Successful"; // You may get this from your database or set it based on certain conditions
+                                    $status = $row_order_item['status'];; // You may get this from your database or set it based on certain conditions
 
                                 ?>
                                     <tr>

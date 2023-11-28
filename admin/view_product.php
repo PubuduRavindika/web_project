@@ -31,6 +31,9 @@ include("../config.php");
                 <a href="view_product.php?action=view_pro">
                     <div class="cell">Genaral</div>
                 </a>
+                <a href="orders.php">
+                    <div class="cell">Orders</div>
+                </a>
                 <a href="insert_product.php">
                     <div class="cell">Insert Product</div>
                 </a>
@@ -62,6 +65,7 @@ include("../config.php");
                                     <tr style="margin-top: 30px;">
                                         <th class="col_name">ID</th>
                                         <th class="col_name">Title</th>
+                                        <th class="col_name">Quantity</th>
                                         <th class="col_name">Price</th>
                                         <th class="col_name">Image</th>
                                         <th class="col_name">Delete</th>
@@ -80,6 +84,7 @@ include("../config.php");
                                         <tr>
                                             <td class="cell_details"><?php echo $row['product_id']; ?></td>
                                             <td class="cell_details"><?php echo $row['product_title']; ?></td>
+                                            <td class="cell_details"><?php echo $row['product_qty']; ?></td>
                                             <td class="cell_details"><?php echo "Rs. ";
                                                                         echo $row['product_price'];
                                                                         echo ".00" ?></td>

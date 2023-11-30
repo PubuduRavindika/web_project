@@ -197,10 +197,10 @@ if (!isset($_SESSION['email'])) {
                     <td>Subtotal</td>
                     <td>Rs.<?php echo $total; ?>.00</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>Discounts</td>
                     <td>Rs.0.00</td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td>Total</td>
                     <td>Rs.<?php echo $total; ?>.00</td>

@@ -176,6 +176,7 @@ include("config.php");
                 <h4>Rs.$pro_price.00</h4>
                 
                 <div class='outofstock'>Out Of Stock</div>
+                <br>
 
                 <input id = 'pro_quantity' name = 'quantity' type='number' value='1' min='1'  max='$available_qty'>
                 <br>

@@ -90,6 +90,7 @@ if (!isset($_SESSION['email'])) {
             $user_img = $row_user['image'];
             $user_name = $row_user['name'];
             $user_email = $row_user['email'];
+            $address = $row_user['address'];
         }
     }
     ?>
@@ -142,6 +143,15 @@ if (!isset($_SESSION['email'])) {
                                         <?php
                                         echo "
                                         <input type='text' class='form-control mb-1' value='$user_email' id='email' onchange='enableSaveButton()'>
+                                        ";
+                                        ?>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Address</label>
+                                        <?php
+                                        echo "
+                                        <input type='text' class='form-control mb-1' value='$address' id='address' onchange='enableSaveButton()'>
                                         ";
                                         ?>
                                     </div>
@@ -203,6 +213,7 @@ if (!isset($_SESSION['email'])) {
         // Get updated values from input fields
         var updatedUsername = document.getElementById('username').value;
         var updatedEmail = document.getElementById('email').value;
+        var updatedAddress = document.getElementById('address').value;
 
         // Send the updated values to the server using AJAX
         var xhr = new XMLHttpRequest();
@@ -222,7 +233,7 @@ if (!isset($_SESSION['email'])) {
         };
 
         // Send data to the server
-        xhr.send('username=' + encodeURIComponent(updatedUsername) + '&email=' + encodeURIComponent(updatedEmail));
+        xhr.send('username=' + encodeURIComponent(updatedUsername) + '&email=' + encodeURIComponent(updatedEmail) + '&address=' + encodeURIComponent(updatedAddress));
     }
 </script>
 

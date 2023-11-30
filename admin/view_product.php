@@ -71,7 +71,7 @@ include("../config.php");
                                         <th class="col_name">Quantity</th>
                                         <th class="col_name">Price</th>
                                         <th class="col_name">Image</th>
-                                        <th class="col_name">Delete</th>
+                                        <!-- <th class="col_name">Delete</th> -->
                                         <th class="col_name">Edit</th>
                                     </tr>
                                 </thead>
@@ -92,7 +92,7 @@ include("../config.php");
                                                                         echo $row['product_price'];
                                                                         echo ".00" ?></td>
                                             <td class="cell_details"><img src="product_imgs/<?php echo $row['product_img_01']; ?>" width="70" height="50" /></td>
-                                            <td class="cell_details"><a href="view_product.php?action=view_pro&delete_product=<?php echo $row['product_id']; ?>">Delete</a></td>
+                                            
                                             <td class="cell_details"><a href="edit_product.php?product_id=<?php echo $row['product_id']; ?>">Edit</a></td>
                                         </tr>
                                     </tbody>

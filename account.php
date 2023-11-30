@@ -83,6 +83,7 @@ if(isset($_SESSION['email'])){
                         <form id="regForm" method="post" enctype="multipart/form-data">
                             <input type="text" name="name" placeholder="Username">
                             <input type="email" name="email" placeholder="Email">
+                            <input type="text" name="address" placeholder="address">
                             <input type="password" name="password" id="password_confirm1" placeholder="Password">
                             <input type="password" name="confirm_password" id="password_confirm2" placeholder="Confirm Password">
                             <input type="file" name="image" class="btn">
@@ -134,6 +135,7 @@ if(isset($_SESSION['email'])){
                         $ip = get_ip();
                         $name = $_POST['name'];
                         $email = trim($_POST['email']);
+                        $address = $_POST['address'];
                         $password = trim($_POST['password']);
                         // $hash_password = md5($password);
                         $confirm_password = trim($_POST['confirm_password']);
@@ -154,7 +156,7 @@ if(isset($_SESSION['email'])){
 
                             move_uploaded_file($image_tmp, "upload-files/$image");
 
-                            $run_insert = mysqli_query($con, "insert into users (ip_address,name,email,password,image) values ('$ip','$name','$email','$password','$image') ");
+                            $run_insert = mysqli_query($con, "insert into users (ip_address,name,email,address,password,image) values ('$ip','$name','$email','$address','$password','$image') ");
 
                             if ($run_insert) {
                                 $sel_user = mysqli_query($con, "select * from users where email='$email' ");

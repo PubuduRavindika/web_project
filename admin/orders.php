@@ -115,7 +115,7 @@ include("../config.php");
                                         <td>Rs.$product_price.00</td>
                                         <td>$quantity</td>
                                         <td>Rs.$total_price.00</td>
-                                        <td>$status</td>
+                                        <td data-order='$order_id'>$status</td>
                                         <td><button onclick='acceptOrder($order_id, $product_id)'>Accept</button></td>
                                         </tr>";
                                     }
